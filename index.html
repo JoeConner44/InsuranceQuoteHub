@@ -13,13 +13,19 @@
       --shadow:rgba(92,51,23,0.12);
     }
     body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--charcoal); min-height:100vh; }
+
+    /* HEADER */
     header { background:var(--bark); padding:0 2rem; display:flex; align-items:center; justify-content:space-between; height:68px; position:sticky; top:0; z-index:100; box-shadow:0 2px 16px rgba(0,0,0,0.18); }
     .logo { font-family:'Playfair Display',serif; font-size:1.45rem; font-weight:700; color:var(--amber); cursor:pointer; }
     .logo span { color:var(--white); }
     nav a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:0.88rem; font-weight:500; margin-left:1.6rem; transition:color .2s; cursor:pointer; }
     nav a:hover, nav a.active-nav { color:var(--amber); }
+
+    /* PAGES */
     .page { display:none; }
     .page.active { display:block; }
+
+    /* HERO */
     .hero { background:linear-gradient(135deg,var(--bark) 0%,#8B3A20 55%,var(--warm2) 100%); padding:5rem 2rem 4rem; text-align:center; position:relative; overflow:hidden; }
     .hero::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); pointer-events:none; }
     .hero-badge { display:inline-block; background:rgba(249,196,107,0.2); border:1px solid rgba(249,196,107,0.4); color:var(--amber); font-size:0.78rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; padding:0.35rem 1rem; border-radius:100px; margin-bottom:1.4rem; }
@@ -30,6 +36,8 @@
     .stat { color:var(--white); text-align:center; }
     .stat strong { display:block; font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--amber); }
     .stat span { font-size:0.82rem; opacity:0.7; }
+
+    /* PROGRESS */
     .progress-wrap { background:var(--white); border-bottom:1px solid rgba(92,51,23,0.1); padding:1rem 2rem; position:sticky; top:68px; z-index:90; }
     .steps { display:flex; align-items:center; justify-content:center; max-width:700px; margin:0 auto; }
     .step { display:flex; flex-direction:column; align-items:center; gap:0.3rem; flex:1; position:relative; cursor:pointer; }
@@ -41,6 +49,8 @@
     .step-label { font-size:0.72rem; font-weight:500; color:var(--muted); white-space:nowrap; }
     .step.active .step-label { color:var(--warm2); font-weight:600; }
     .step.done .step-label { color:var(--warm1); }
+
+    /* FORM */
     .form-section { max-width:760px; margin:2.5rem auto 4rem; padding:0 1.5rem; }
     .card { background:var(--white); border-radius:18px; padding:2.4rem 2.8rem; box-shadow:0 4px 32px var(--shadow); animation:fadeUp .4s ease both; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
@@ -64,6 +74,8 @@
     .btn-primary:disabled { opacity:0.65; cursor:not-allowed; transform:none; }
     .btn-back { background:transparent; color:var(--muted); border:1.5px solid #E0C9B4; }
     .btn-back:hover { background:#F9F1E8; color:var(--bark); }
+
+    /* CONFIRMATION */
     .confirm-card { text-align:center; padding:3rem 2.8rem; }
     .confirm-icon { width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg,var(--warm1),var(--warm2)); display:flex; align-items:center; justify-content:center; margin:0 auto 1.4rem; font-size:2rem; }
     .confirm-card h2 { font-family:'Playfair Display',serif; font-size:1.9rem; color:var(--bark); margin-bottom:0.6rem; }
@@ -74,12 +86,18 @@
     .summary-row:last-child { border-bottom:none; }
     .summary-row span:first-child { color:var(--muted); }
     .summary-row strong { color:var(--bark); }
+
+    /* TRUST */
     .trust-strip { background:#FDF0E0; border-top:1px solid #F0DEC8; padding:1.4rem 2rem; display:flex; justify-content:center; gap:2.5rem; flex-wrap:wrap; }
     .trust-item { display:flex; align-items:center; gap:0.5rem; font-size:0.82rem; font-weight:500; color:var(--bark); }
+
+    /* CONTENT PAGES */
     .content-hero { background:linear-gradient(135deg,var(--bark) 0%,#8B3A20 100%); padding:3.5rem 2rem; text-align:center; }
     .content-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); color:var(--white); margin-bottom:0.6rem; }
     .content-hero p { color:rgba(255,255,255,0.7); max-width:500px; margin:0 auto; }
     .content-body { max-width:900px; margin:3rem auto 4rem; padding:0 1.5rem; }
+
+    /* HOW IT WORKS */
     .hiw-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem; margin-bottom:2rem; }
     .hiw-step { background:var(--white); border-radius:16px; padding:2rem 1.6rem; box-shadow:0 4px 20px var(--shadow); text-align:center; }
     .hiw-icon { font-size:2.4rem; margin-bottom:1rem; }
@@ -93,18 +111,8 @@
     .hiw-cta p { color:rgba(255,255,255,0.8); margin-bottom:1.4rem; }
     .hiw-cta button { background:var(--white); color:var(--warm2); border:none; padding:0.8rem 2.2rem; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:700; cursor:pointer; transition:all .2s; }
     .hiw-cta button:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.15); }
-    .carriers-intro { text-align:center; margin-bottom:2.5rem; }
-    .carriers-intro h2 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--bark); margin-bottom:0.5rem; }
-    .carriers-intro p { color:var(--muted); max-width:520px; margin:0 auto; line-height:1.6; }
-    .carrier-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:1.2rem; margin-bottom:2rem; }
-    .carrier-card { background:var(--white); border-radius:14px; padding:1.6rem 1rem; text-align:center; box-shadow:0 3px 16px var(--shadow); transition:transform .2s,box-shadow .2s; }
-    .carrier-card:hover { transform:translateY(-3px); box-shadow:0 8px 28px var(--shadow); }
-    .carrier-logo { font-size:2rem; margin-bottom:0.6rem; }
-    .carrier-name { font-weight:700; font-size:0.88rem; color:var(--bark); margin-bottom:0.2rem; }
-    .carrier-tag { font-size:0.75rem; color:var(--muted); }
-    .carriers-note { background:var(--white); border-radius:14px; padding:1.6rem 2rem; box-shadow:0 3px 16px var(--shadow); display:flex; align-items:flex-start; gap:1rem; }
-    .carriers-note p { font-size:0.88rem; color:var(--muted); line-height:1.5; }
-    .carriers-note p strong { color:var(--bark); }
+
+    /* FAQ */
     .faq-list { display:flex; flex-direction:column; gap:1rem; }
     .faq-item { background:var(--white); border-radius:14px; box-shadow:0 3px 16px var(--shadow); overflow:hidden; }
     .faq-q { width:100%; background:none; border:none; padding:1.2rem 1.6rem; text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-family:'DM Sans',sans-serif; font-size:0.97rem; font-weight:600; color:var(--bark); }
@@ -113,8 +121,12 @@
     .faq-item.open .faq-arrow { transform:rotate(180deg); }
     .faq-a { max-height:0; overflow:hidden; transition:max-height .3s ease,padding .3s; padding:0 1.6rem; font-size:0.9rem; color:var(--muted); line-height:1.7; }
     .faq-item.open .faq-a { max-height:300px; padding:0 1.6rem 1.4rem; }
+
+    /* FOOTER */
     footer { background:var(--charcoal); color:rgba(255,255,255,0.5); text-align:center; padding:1.4rem; font-size:0.8rem; }
     footer strong { color:var(--amber); }
+
+    /* RESPONSIVE */
     @media(max-width:580px){
       .form-grid{grid-template-columns:1fr} .span2{grid-column:span 1}
       .card{padding:1.6rem 1.2rem} .hero{padding:3.5rem 1.2rem 3rem}
@@ -127,14 +139,16 @@
 <header>
   <div class="logo" onclick="showPage('home')">Insurance<span>QuoteHub</span></div>
   <nav>
+    <a onclick="showPage('home')" id="nav-home">Home</a>
     <a onclick="showPage('howitworks')" id="nav-howitworks">How It Works</a>
-    <a onclick="showPage('carriers')" id="nav-carriers">Carriers</a>
     <a onclick="showPage('faq')" id="nav-faq">FAQ</a>
   </nav>
 </header>
 
-<!-- PAGE: HOME -->
+
+<!-- ══════════ PAGE: HOME ══════════ -->
 <div class="page active" id="page-home">
+
   <section class="hero">
     <div class="hero-badge">100% Free · No Obligation</div>
     <h1>Your Best Car Insurance Rate Is <em>Waiting</em></h1>
@@ -157,6 +171,7 @@
   </div>
 
   <section class="form-section">
+
     <!-- STEP 1 -->
     <div class="card" id="s1">
       <div class="card-title">Tell us about yourself</div>
@@ -165,13 +180,20 @@
         <div><label for="fname">First Name</label><input type="text" id="fname" placeholder="Jane"/></div>
         <div><label for="lname">Last Name</label><input type="text" id="lname" placeholder="Smith"/></div>
         <div><label for="dob">Date of Birth</label><input type="date" id="dob"/></div>
-        <div><label for="gender">Gender</label><select id="gender"><option value="">Select…</option><option>Male</option><option>Female</option><option>Non-binary</option><option>Prefer not to say</option></select></div>
-        <div><label for="marital">Marital Status</label><select id="marital"><option value="">Select…</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select></div>
+        <div><label for="gender">Gender</label>
+          <select id="gender"><option value="">Select…</option><option>Male</option><option>Female</option><option>Non-binary</option><option>Prefer not to say</option></select>
+        </div>
+        <div><label for="marital">Marital Status</label>
+          <select id="marital"><option value="">Select…</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
+        </div>
         <div><label for="zip">ZIP Code</label><input type="text" id="zip" placeholder="30625" maxlength="5"/></div>
         <div class="span2"><label for="email">Email Address</label><input type="email" id="email" placeholder="jane@example.com"/></div>
         <div class="span2"><label for="phone">Phone Number</label><input type="tel" id="phone" placeholder="(555) 000-0000"/></div>
       </div>
-      <div class="btn-row"><span style="font-size:0.8rem;color:var(--muted)">🔒 Your info is private &amp; secure</span><button class="btn btn-primary" onclick="goTo(2)">Next: Your Vehicle →</button></div>
+      <div class="btn-row">
+        <span style="font-size:0.8rem;color:var(--muted)">🔒 Your info is private &amp; secure</span>
+        <button class="btn btn-primary" onclick="goTo(2)">Next: Your Vehicle →</button>
+      </div>
     </div>
 
     <!-- STEP 2 -->
@@ -180,15 +202,35 @@
       <div class="card-sub">We'll need details about the car you want to insure.</div>
       <div class="form-grid">
         <div><label for="vyear">Vehicle Year</label><select id="vyear"><option value="">Select year…</option></select></div>
-        <div><label for="vmake">Make</label><select id="vmake"><option value="">Select make…</option><option>Acura</option><option>Audi</option><option>BMW</option><option>Buick</option><option>Cadillac</option><option>Chevrolet</option><option>Chrysler</option><option>Dodge</option><option>Ford</option><option>GMC</option><option>Honda</option><option>Hyundai</option><option>Infiniti</option><option>Jeep</option><option>Kia</option><option>Lexus</option><option>Lincoln</option><option>Mazda</option><option>Mercedes-Benz</option><option>Nissan</option><option>Ram</option><option>Subaru</option><option>Tesla</option><option>Toyota</option><option>Volkswagen</option><option>Volvo</option><option>Other</option></select></div>
+        <div><label for="vmake">Make</label>
+          <select id="vmake"><option value="">Select make…</option>
+            <option>Acura</option><option>Audi</option><option>BMW</option><option>Buick</option><option>Cadillac</option>
+            <option>Chevrolet</option><option>Chrysler</option><option>Dodge</option><option>Ford</option><option>GMC</option>
+            <option>Honda</option><option>Hyundai</option><option>Infiniti</option><option>Jeep</option><option>Kia</option>
+            <option>Lexus</option><option>Lincoln</option><option>Mazda</option><option>Mercedes-Benz</option><option>Nissan</option>
+            <option>Ram</option><option>Subaru</option><option>Tesla</option><option>Toyota</option><option>Volkswagen</option>
+            <option>Volvo</option><option>Other</option>
+          </select>
+        </div>
         <div><label for="vmodel">Model</label><input type="text" id="vmodel" placeholder="e.g. Camry, F-150…"/></div>
         <div><label for="vtrim">Trim / Style</label><input type="text" id="vtrim" placeholder="e.g. LE, XLT, Sport…"/></div>
-        <div><label for="vuse">Primary Use</label><select id="vuse"><option value="">Select…</option><option>Personal / Pleasure</option><option>Commute to Work</option><option>Business</option><option>Rideshare (Uber/Lyft)</option><option>Delivery</option></select></div>
-        <div><label for="vmiles">Annual Mileage</label><select id="vmiles"><option value="">Select…</option><option>Under 5,000 miles</option><option>5,000 – 10,000 miles</option><option>10,000 – 15,000 miles</option><option>15,000 – 20,000 miles</option><option>Over 20,000 miles</option></select></div>
-        <div><label for="vownership">Ownership</label><select id="vownership"><option value="">Select…</option><option>Owned outright</option><option>Financed / Loan</option><option>Leased</option></select></div>
-        <div><label for="vgarage">Garaged overnight?</label><select id="vgarage"><option value="">Select…</option><option>Yes, in a garage</option><option>Yes, in a carport</option><option>No, on the street</option><option>No, in a driveway</option></select></div>
+        <div><label for="vuse">Primary Use</label>
+          <select id="vuse"><option value="">Select…</option><option>Personal / Pleasure</option><option>Commute to Work</option><option>Business</option><option>Rideshare (Uber/Lyft)</option><option>Delivery</option></select>
+        </div>
+        <div><label for="vmiles">Annual Mileage</label>
+          <select id="vmiles"><option value="">Select…</option><option>Under 5,000 miles</option><option>5,000 – 10,000 miles</option><option>10,000 – 15,000 miles</option><option>15,000 – 20,000 miles</option><option>Over 20,000 miles</option></select>
+        </div>
+        <div><label for="vownership">Ownership</label>
+          <select id="vownership"><option value="">Select…</option><option>Owned outright</option><option>Financed / Loan</option><option>Leased</option></select>
+        </div>
+        <div><label for="vgarage">Garaged overnight?</label>
+          <select id="vgarage"><option value="">Select…</option><option>Yes, in a garage</option><option>Yes, in a carport</option><option>No, on the street</option><option>No, in a driveway</option></select>
+        </div>
       </div>
-      <div class="btn-row"><button class="btn btn-back" onclick="goTo(1)">← Back</button><button class="btn btn-primary" onclick="goTo(3)">Next: Drivers →</button></div>
+      <div class="btn-row">
+        <button class="btn btn-back" onclick="goTo(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(3)">Next: Drivers →</button>
+      </div>
     </div>
 
     <!-- STEP 3 -->
@@ -196,16 +238,53 @@
       <div class="card-title">Driver information</div>
       <div class="card-sub">Tell us about everyone who will drive this vehicle.</div>
       <div class="form-grid">
-        <div><label for="dlicense">Driver's License State</label><select id="dlicense"><option value="">Select state…</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option></select></div>
-        <div><label for="dlicenseyrs">Years Licensed</label><select id="dlicenseyrs"><option value="">Select…</option><option>Less than 1 year</option><option>1–2 years</option><option>3–5 years</option><option>6–10 years</option><option>11–20 years</option><option>Over 20 years</option></select></div>
-        <div class="span2"><label>Good Driver Discount eligible?</label><div class="radio-group"><div class="radio-btn"><input type="radio" name="gooddriver" id="gd_yes" value="yes"/><label for="gd_yes">Yes – no violations</label></div><div class="radio-btn"><input type="radio" name="gooddriver" id="gd_no" value="no"/><label for="gd_no">No – I have violations</label></div></div></div>
-        <div><label for="accidents">Accidents (past 3 yrs)</label><select id="accidents"><option value="">Select…</option><option>None</option><option>1 at-fault</option><option>2+ at-fault</option><option>1 not-at-fault</option></select></div>
-        <div><label for="violations">Violations (past 3 yrs)</label><select id="violations"><option value="">Select…</option><option>None</option><option>1 minor (speeding, etc.)</option><option>2+ minor</option><option>DUI/DWI</option><option>Major violation</option></select></div>
-        <div class="span2"><label>Additional drivers on the policy?</label><div class="radio-group"><div class="radio-btn"><input type="radio" name="addl" id="addl_no" value="no"/><label for="addl_no">Just me</label></div><div class="radio-btn"><input type="radio" name="addl" id="addl_yes" value="yes"/><label for="addl_yes">Yes, add more drivers</label></div></div></div>
-        <div><label for="occupation">Occupation</label><select id="occupation"><option value="">Select…</option><option>Employed full-time</option><option>Employed part-time</option><option>Self-employed</option><option>Student</option><option>Retired</option><option>Homemaker</option><option>Military</option><option>Unemployed</option></select></div>
-        <div><label for="education">Highest Education</label><select id="education"><option value="">Select…</option><option>High school / GED</option><option>Some college</option><option>Associate's degree</option><option>Bachelor's degree</option><option>Graduate degree</option></select></div>
+        <div><label for="dlicense">Driver's License State</label>
+          <select id="dlicense"><option value="">Select state…</option>
+            <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option>
+            <option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option>
+            <option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option>
+            <option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option>
+            <option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+            <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option>
+            <option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option>
+            <option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option>
+            <option>WI</option><option>WY</option>
+          </select>
+        </div>
+        <div><label for="dlicenseyrs">Years Licensed</label>
+          <select id="dlicenseyrs"><option value="">Select…</option><option>Less than 1 year</option><option>1–2 years</option><option>3–5 years</option><option>6–10 years</option><option>11–20 years</option><option>Over 20 years</option></select>
+        </div>
+        <div class="span2">
+          <label>Good Driver Discount eligible?</label>
+          <div class="radio-group">
+            <div class="radio-btn"><input type="radio" name="gooddriver" id="gd_yes" value="Yes – no violations"/><label for="gd_yes">Yes – no violations</label></div>
+            <div class="radio-btn"><input type="radio" name="gooddriver" id="gd_no" value="No – I have violations"/><label for="gd_no">No – I have violations</label></div>
+          </div>
+        </div>
+        <div><label for="accidents">Accidents (past 3 yrs)</label>
+          <select id="accidents"><option value="">Select…</option><option>None</option><option>1 at-fault</option><option>2+ at-fault</option><option>1 not-at-fault</option></select>
+        </div>
+        <div><label for="violations">Violations (past 3 yrs)</label>
+          <select id="violations"><option value="">Select…</option><option>None</option><option>1 minor (speeding, etc.)</option><option>2+ minor</option><option>DUI/DWI</option><option>Major violation</option></select>
+        </div>
+        <div class="span2">
+          <label>Additional drivers on the policy?</label>
+          <div class="radio-group">
+            <div class="radio-btn"><input type="radio" name="addl" id="addl_no" value="Just me"/><label for="addl_no">Just me</label></div>
+            <div class="radio-btn"><input type="radio" name="addl" id="addl_yes" value="Yes, add more drivers"/><label for="addl_yes">Yes, add more drivers</label></div>
+          </div>
+        </div>
+        <div><label for="occupation">Occupation</label>
+          <select id="occupation"><option value="">Select…</option><option>Employed full-time</option><option>Employed part-time</option><option>Self-employed</option><option>Student</option><option>Retired</option><option>Homemaker</option><option>Military</option><option>Unemployed</option></select>
+        </div>
+        <div><label for="education">Highest Education</label>
+          <select id="education"><option value="">Select…</option><option>High school / GED</option><option>Some college</option><option>Associate's degree</option><option>Bachelor's degree</option><option>Graduate degree</option></select>
+        </div>
       </div>
-      <div class="btn-row"><button class="btn btn-back" onclick="goTo(2)">← Back</button><button class="btn btn-primary" onclick="goTo(4)">Next: Coverage →</button></div>
+      <div class="btn-row">
+        <button class="btn btn-back" onclick="goTo(2)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(4)">Next: Coverage →</button>
+      </div>
     </div>
 
     <!-- STEP 4 -->
@@ -213,16 +292,43 @@
       <div class="card-title">Choose your coverage</div>
       <div class="card-sub">Select what's important to you — we'll find the best match.</div>
       <div class="form-grid">
-        <div class="span2"><label>Current insurance status</label><div class="radio-group"><div class="radio-btn"><input type="radio" name="insured" id="ins_yes" value="yes"/><label for="ins_yes">Currently insured</label></div><div class="radio-btn"><input type="radio" name="insured" id="ins_no" value="no"/><label for="ins_no">Not currently insured</label></div><div class="radio-btn"><input type="radio" name="insured" id="ins_lapse" value="lapse"/><label for="ins_lapse">Lapsed policy</label></div></div></div>
+        <div class="span2">
+          <label>Current insurance status</label>
+          <div class="radio-group">
+            <div class="radio-btn"><input type="radio" name="insured" id="ins_yes" value="Currently insured"/><label for="ins_yes">Currently insured</label></div>
+            <div class="radio-btn"><input type="radio" name="insured" id="ins_no" value="Not currently insured"/><label for="ins_no">Not currently insured</label></div>
+            <div class="radio-btn"><input type="radio" name="insured" id="ins_lapse" value="Lapsed policy"/><label for="ins_lapse">Lapsed policy</label></div>
+          </div>
+        </div>
         <div><label for="current_carrier">Current Carrier (if any)</label><input type="text" id="current_carrier" placeholder="e.g. State Farm, Geico…"/></div>
         <div><label for="current_exp">Policy Expiration</label><input type="date" id="current_exp"/></div>
-        <div class="span2"><label>Coverage level desired</label><div class="radio-group"><div class="radio-btn"><input type="radio" name="covlevel" id="cov_min" value="min"/><label for="cov_min">State Minimum</label></div><div class="radio-btn"><input type="radio" name="covlevel" id="cov_std" value="std"/><label for="cov_std">Standard</label></div><div class="radio-btn"><input type="radio" name="covlevel" id="cov_full" value="full"/><label for="cov_full">Full Coverage</label></div></div></div>
-        <div><label for="deductible">Preferred Deductible</label><select id="deductible"><option value="">Select…</option><option>$250</option><option>$500</option><option>$1,000</option><option>$1,500</option><option>$2,000</option><option>No preference</option></select></div>
+        <div class="span2">
+          <label>Coverage level desired</label>
+          <div class="radio-group">
+            <div class="radio-btn"><input type="radio" name="covlevel" id="cov_min" value="State Minimum"/><label for="cov_min">State Minimum</label></div>
+            <div class="radio-btn"><input type="radio" name="covlevel" id="cov_std" value="Standard"/><label for="cov_std">Standard</label></div>
+            <div class="radio-btn"><input type="radio" name="covlevel" id="cov_full" value="Full Coverage"/><label for="cov_full">Full Coverage</label></div>
+          </div>
+        </div>
+        <div><label for="deductible">Preferred Deductible</label>
+          <select id="deductible"><option value="">Select…</option><option>$250</option><option>$500</option><option>$1,000</option><option>$1,500</option><option>$2,000</option><option>No preference</option></select>
+        </div>
         <div><label for="start_date">Desired Start Date</label><input type="date" id="start_date"/></div>
-        <div class="span2"><label>Optional add-ons (select all that apply)</label><div class="radio-group" style="flex-wrap:wrap"><div class="radio-btn"><input type="checkbox" id="add_roadside"/><label for="add_roadside" style="cursor:pointer">Roadside Assistance</label></div><div class="radio-btn"><input type="checkbox" id="add_rental"/><label for="add_rental" style="cursor:pointer">Rental Reimbursement</label></div><div class="radio-btn"><input type="checkbox" id="add_gap"/><label for="add_gap" style="cursor:pointer">GAP Coverage</label></div><div class="radio-btn"><input type="checkbox" id="add_umbrella"/><label for="add_umbrella" style="cursor:pointer">Umbrella Policy</label></div></div></div>
+        <div class="span2">
+          <label>Optional add-ons (select all that apply)</label>
+          <div class="radio-group" style="flex-wrap:wrap">
+            <div class="radio-btn"><input type="checkbox" id="add_roadside"/><label for="add_roadside">Roadside Assistance</label></div>
+            <div class="radio-btn"><input type="checkbox" id="add_rental"/><label for="add_rental">Rental Reimbursement</label></div>
+            <div class="radio-btn"><input type="checkbox" id="add_gap"/><label for="add_gap">GAP Coverage</label></div>
+            <div class="radio-btn"><input type="checkbox" id="add_umbrella"/><label for="add_umbrella">Umbrella Policy</label></div>
+          </div>
+        </div>
         <div class="span2"><label for="notes">Anything else we should know?</label><textarea id="notes" rows="3" placeholder="Military service, good student discount, multi-policy discount, etc."></textarea></div>
       </div>
-      <div class="btn-row"><button class="btn btn-back" onclick="goTo(3)">← Back</button><button class="btn btn-primary" onclick="goTo(5)">🎉 Get My Quotes!</button></div>
+      <div class="btn-row">
+        <button class="btn btn-back" onclick="goTo(3)">← Back</button>
+        <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">🎉 Get My Quotes!</button>
+      </div>
     </div>
 
     <!-- STEP 5 -->
@@ -240,6 +346,7 @@
       </div>
       <button class="btn btn-primary" style="width:100%;padding:1rem" onclick="startOver()">Start a New Quote</button>
     </div>
+
   </section>
 
   <div class="trust-strip">
@@ -249,9 +356,10 @@
     <div class="trust-item"><span>✅</span> Free, No Obligation</div>
     <div class="trust-item"><span>🚗</span> All Vehicle Types</div>
   </div>
-</div>
+</div><!-- /page-home -->
 
-<!-- PAGE: HOW IT WORKS -->
+
+<!-- ══════════ PAGE: HOW IT WORKS ══════════ -->
 <div class="page" id="page-howitworks">
   <div class="content-hero">
     <h1>How It Works</h1>
@@ -261,16 +369,16 @@
     <div class="hiw-steps">
       <div class="hiw-step"><div class="hiw-icon">📝</div><div class="hiw-num">STEP 1</div><h3>Answer a Few Questions</h3><p>Tell us about yourself, your vehicle, your driving history, and the coverage you want. About 2 minutes total.</p></div>
       <div class="hiw-step"><div class="hiw-icon">🔍</div><div class="hiw-num">STEP 2</div><h3>We Search 50+ Carriers</h3><p>Our system instantly compares rates from over 50 top-rated insurance companies to find the best options for your profile.</p></div>
-      <div class="hiw-step"><div class="hiw-icon">✔️</div><div class="hiw-num">STEP 3</div><h3>Review Your Quotes</h3><p>Get multiple competitive quotes delivered to your inbox — side by side so you can compare coverage and pricing easily.</p></div>
-      <div class="hiw-step"><div class="hiw-icon">✅</div><div class="hiw-num">STEP 4</div><h3>Choose & Save</h3><p>Pick the plan that fits your budget and needs. Licensed agents are standing by to help if you have questions.</p></div>
+      <div class="hiw-step"><div class="hiw-icon">📊</div><div class="hiw-num">STEP 3</div><h3>Review Your Quotes</h3><p>Get multiple competitive quotes delivered to your inbox — side by side so you can compare coverage and pricing easily.</p></div>
+      <div class="hiw-step"><div class="hiw-icon">✅</div><div class="hiw-num">STEP 4</div><h3>Choose &amp; Save</h3><p>Pick the plan that fits your budget and needs. Licensed agents are standing by to help if you have questions.</p></div>
     </div>
     <div style="background:var(--white);border-radius:16px;padding:2rem 2.5rem;box-shadow:0 4px 20px var(--shadow);margin-bottom:2rem">
       <h2 style="font-family:'Playfair Display',serif;color:var(--bark);margin-bottom:1.2rem">Why InsuranceQuoteHub?</h2>
       <div class="why-grid">
         <div class="why-item"><span style="font-size:1.4rem">💰</span><div><strong style="color:var(--bark);display:block;margin-bottom:0.2rem">Save Money</strong><span style="font-size:0.88rem;color:var(--muted)">Customers save an average of $600+ per year by switching.</span></div></div>
-        <div class="why-item"><span style="font-size:1.4rem">🆓</span><div><strong style="color:var(--bark);display:block;margin-bottom:0.2rem">No Obligation</strong><span style="font-size:0.88rem;color:var(--muted)">Browse quotes freely. You're never required to purchase anything.</span></div></div>
+        <div class="why-item"><span style="font-size:1.4rem">🚫</span><div><strong style="color:var(--bark);display:block;margin-bottom:0.2rem">No Obligation</strong><span style="font-size:0.88rem;color:var(--muted)">Browse quotes freely. You're never required to purchase anything.</span></div></div>
         <div class="why-item"><span style="font-size:1.4rem">🔒</span><div><strong style="color:var(--bark);display:block;margin-bottom:0.2rem">Your Data is Safe</strong><span style="font-size:0.88rem;color:var(--muted)">We use bank-level encryption and never sell your personal data.</span></div></div>
-        <div class="why-item"><span style="font-size:1.4rem">👨‍💼</span><div><strong style="color:var(--bark);display:block;margin-bottom:0.2rem">Licensed Experts</strong><span style="font-size:0.88rem;color:var(--muted)">Real licensed agents available to guide you through the process.</span></div></div>
+        <div class="why-item"><span style="font-size:1.4rem">🤝</span><div><strong style="color:var(--bark);display:block;margin-bottom:0.2rem">Licensed Experts</strong><span style="font-size:0.88rem;color:var(--muted)">Real licensed agents available to guide you through the process.</span></div></div>
       </div>
     </div>
     <div class="hiw-cta">
@@ -281,124 +389,137 @@
   </div>
 </div>
 
-<!-- PAGE: CARRIERS -->
-<div class="page" id="page-carriers">
-  <div class="content-hero">
-    <h1>Our Carrier Network</h1>
-    <p>We partner with 50+ of America's most trusted insurance carriers to find you the best rate.</p>
-  </div>
-  <div class="content-body">
-    <div class="carriers-intro">
-      <h2>Top-Rated Carriers, All in One Place</h2>
-      <p>Instead of visiting dozens of websites, we search all of these carriers simultaneously to bring you the most competitive quotes.</p>
-    </div>
-    <div class="carrier-grid">
-      <div class="carrier-card"><div class="carrier-logo">🦎</div><div class="carrier-name">GEICO</div><div class="carrier-tag">Best for Low Rates</div></div>
-      <div class="carrier-card"><div class="carrier-logo">🌾</div><div class="carrier-name">State Farm</div><div class="carrier-tag">Largest U.S. Insurer</div></div>
-      <div class="carrier-card"><div class="carrier-logo">🛡️</div><div class="carrier-name">Progressive</div><div class="carrier-tag">Best for High-Risk</div></div>
-      <div class="carrier-card"><div class="carrier-logo">🏛️</div><div class="carrier-name">Allstate</div><div class="carrier-tag">Best for Bundles</div></div>
-      <div class="carrier-card"><div class="carrier-logo">🎖️</div><div class="carrier-name">USAA</div><div class="carrier-tag">Best for Military</div></div>
-      <div class="carrier-card"><div class="carrier-logo">👨‍🌾</div><div class="carrier-name">Farmers</div><div class="carrier-tag">Best for Families</div></div>
-      <div class="carrier-card"><div class="carrier-logo">🌐</div><div class="carrier-name">Nationwide</div><div class="carrier-tag">Flexible Coverage</div></div>
-      <div class="carrier-card"><div class="carrier-logo">🛡️‍♀️</div><div class="carrier-name">Liberty Mutual</div><div class="carrier-tag">Custom Coverage</div></div>
-      <div class="carrier-card"><div class="carrier-logo">🧳</div><div class="carrier-name">Travelers</div><div class="carrier-tag">Excellent Service</div></div>
-      <div class="carrier-card"><div class="carrier-logo">🔑</div><div class="carrier-name">AAA</div><div class="carrier-tag">Member Discounts</div></div>
-      <div class="carrier-card"><div class="carrier-logo">⚓</div><div class="carrier-name">Erie Insurance</div><div class="carrier-tag">Highly Rated</div></div>
-      <div class="carrier-card"><div class="carrier-logo">👨‍👩‍👧‍👦</div><div class="carrier-name">American Family</div><div class="carrier-tag">Family Friendly</div></div>
-    </div>
-    <div class="carriers-note">
-      <span style="font-size:1.8rem">ℹ️</span>
-      <p><strong>Not All Carriers in All States:</strong> Availability varies by location and risk profile. We'll show you only the carriers that can quote in your area based on your specific information.</p>
-    </div>
-  </div>
-</div>
 
-<!-- PAGE: FAQ -->
+<!-- ══════════ PAGE: FAQ ══════════ -->
 <div class="page" id="page-faq">
   <div class="content-hero">
     <h1>Frequently Asked Questions</h1>
-    <p>Find answers to common questions about getting insurance quotes.</p>
+    <p>Everything you need to know about getting a quote through InsuranceQuoteHub.</p>
   </div>
   <div class="content-body">
-    <div class="faq-list" id="faq-list"></div>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is InsuranceQuoteHub free to use?<span class="faq-arrow">▼</span></button><div class="faq-a">Yes, completely free. We are compensated by the insurance carriers when you purchase a policy — you never pay us anything. There is also no obligation to buy; you're free to compare quotes and walk away at any time.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Will getting a quote affect my credit score?<span class="faq-arrow">▼</span></button><div class="faq-a">No. Insurance quote requests use a "soft pull" on your credit, which does not affect your credit score in any way. This is different from a loan application, which uses a "hard pull." You can request as many quotes as you like without any impact to your credit.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How quickly will I receive my quotes?<span class="faq-arrow">▼</span></button><div class="faq-a">Most customers receive their initial quotes within minutes of submitting the form. A licensed agent may also follow up by phone or email within 24 hours to walk you through your options and answer any questions.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What information do I need to get a quote?<span class="faq-arrow">▼</span></button><div class="faq-a">You'll need basic personal info (name, date of birth, address), your vehicle details (year, make, model), your driver's license information, and your current insurance status. The whole process takes about 2 minutes. You do not need your VIN or policy number to get started.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I get a quote if I have a bad driving record?<span class="faq-arrow">▼</span></button><div class="faq-a">Absolutely. We work with carriers who specialize in non-standard or high-risk auto insurance. Whether you have accidents, violations, a DUI, or a lapse in coverage, we can still find you options. Rates may be higher, but we'll find the most competitive rate available for your situation.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is my personal information safe?<span class="faq-arrow">▼</span></button><div class="faq-a">Yes. We use bank-level encryption to protect all data you submit. Your information is shared only with licensed insurance carriers for the purpose of generating your quote. We do not sell your data to unrelated third parties, and you can request deletion of your information at any time.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What types of vehicles can I insure?<span class="faq-arrow">▼</span></button><div class="faq-a">We can help with standard passenger vehicles (cars, trucks, SUVs, minivans), classic and antique vehicles, motorcycles (through partner carriers), and commercial vehicles used for business. If you have a specialty vehicle, let us know in the notes field and we'll do our best to match you.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What's the difference between liability and full coverage?<span class="faq-arrow">▼</span></button><div class="faq-a">Liability coverage pays for damage you cause to other people and their property — it does not cover your own car. Full coverage adds Collision (covers your car in an accident) and Comprehensive (covers theft, weather, animals, etc.) on top of liability. If your car is financed or leased, your lender likely requires full coverage.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I cancel my current policy and switch?<span class="faq-arrow">▼</span></button><div class="faq-a">Yes. You can switch insurance carriers at any time — you are not locked in. Most insurers will pro-rate a refund for unused premium on your current policy. We recommend having your new policy active before canceling the old one to avoid any gap in coverage.</div></div>
+    </div>
   </div>
 </div>
 
-<footer>© 2026 <strong>InsuranceQuoteHub.com</strong> · We help connect consumers with licensed insurance agents. Privacy · Terms</footer>
+<footer>
+  © 2026 <strong>InsuranceQuoteHub.com</strong> · This site is not an insurance company. We help connect consumers with licensed insurance agents and carriers. &nbsp;|&nbsp; Privacy Policy &nbsp;|&nbsp; Terms of Use
+</footer>
 
 <script>
+  // ══ STEP 1: Paste your Google Apps Script Web App URL below ══
+  const SHEET_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+
+  // Populate year dropdown
   const yrSel = document.getElementById('vyear');
-  for(let y=new Date().getFullYear()+1; y>=1990; y--){
-    const o=document.createElement('option');
-    o.value=y; o.textContent=y;
-    yrSel.appendChild(o);
+  for (let y = new Date().getFullYear() + 1; y >= 1990; y--) {
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y; yrSel.appendChild(o);
   }
 
-  const faqs=[
-    {q:"Is InsuranceQuoteHub a real insurance company?",a:"No, we're not an insurance company. We help connect consumers with licensed insurance agents and carriers to get competitive quotes."},
-    {q:"Will I be obligated to buy anything?",a:"Absolutely not. You can browse quotes completely free with no obligation to purchase. We're here to help you compare options."},
-    {q:"How long does the process take?",a:"The quote request takes about 2 minutes to complete. You'll receive quotes from multiple carriers within minutes after submission."},
-    {q:"Is my personal information safe?",a:"Yes. We use bank-level encryption to protect all data and never sell your personal information to third parties."},
-    {q:"Can I get quotes without providing my VIN?",a:"Yes, you can provide basic vehicle information (year, make, model, trim) without the VIN."},
-    {q:"Will this hurt my credit score?",a:"No. Getting insurance quotes is a soft inquiry that does not affect your credit score."},
-    {q:"What if I don't see my preferred carrier?",a:"Carrier availability varies by state and your profile. If your preferred carrier isn't available through our platform, you can always contact them directly."},
-    {q:"Do you charge any fees?",a:"We're completely free for consumers. Insurance companies pay us a referral fee if you purchase through them."}
-  ];
-
-  const faqList=document.getElementById('faq-list');
-  faqs.forEach((faq,i)=>{
-    const item=document.createElement('div');
-    item.className='faq-item';
-    item.innerHTML=`<button class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span>${faq.q}</span><span class="faq-arrow">▼</span></button><div class="faq-a">${faq.a}</div>`;
-    faqList.appendChild(item);
-  });
-
-  let currentStep=1;
-
-  function showPage(page){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById('page-'+page).classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
+  // PAGE NAV
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-nav'));
+    const nav = document.getElementById('nav-' + name);
+    if (nav) nav.classList.add('active-nav');
+    document.documentElement.scrollTop = 0;
   }
 
-  function goTo(step){
-    if(step===5) buildSummary();
-    for(let i=1;i<=5;i++) document.getElementById('s'+i).style.display='none';
-    document.getElementById('s'+step).style.display='block';
-    for(let i=1;i<=5;i++){
-      const dot=document.getElementById('step-dot-'+i);
-      dot.className='step';
-      if(i<step) dot.classList.add('done');
-      else if(i===step) dot.classList.add('active');
+  // FORM STEP NAV — no scroll
+  let currentStep = 1;
+  function goTo(step) {
+    if (step === 5) buildSummary();
+    for (let i = 1; i <= 5; i++) document.getElementById('s' + i).style.display = 'none';
+    const card = document.getElementById('s' + step);
+    card.style.display = 'block';
+    card.style.animation = 'none';
+    requestAnimationFrame(() => { card.style.animation = 'fadeUp .4s ease both'; });
+    for (let i = 1; i <= 5; i++) {
+      const dot = document.getElementById('step-dot-' + i);
+      dot.className = 'step';
+      if (i < step) dot.classList.add('done');
+      else if (i === step) dot.classList.add('active');
     }
-    currentStep=step;
-    window.scrollTo({top:0,behavior:'smooth'});
+    currentStep = step;
   }
 
-  function buildSummary(){
-    const fname=document.getElementById('fname').value||'—';
-    const lname=document.getElementById('lname').value||'';
-    const zip=document.getElementById('zip').value||'—';
-    const year=document.getElementById('vyear').value||'';
-    const make=document.getElementById('vmake').value||'';
-    const model=document.getElementById('vmodel').value||'';
-    const email=document.getElementById('email').value||'—';
-    const covEl=document.querySelector('input[name="covlevel"]:checked');
-    const cov=covEl?covEl.nextElementSibling.textContent:'—';
-    
-    document.getElementById('sum-name').textContent=`${fname} ${lname}`.trim()||'—';
-    document.getElementById('sum-zip').textContent=zip;
-    document.getElementById('sum-vehicle').textContent=[year,make,model].filter(Boolean).join(' ')||'—';
-    document.getElementById('sum-coverage').textContent=cov;
-    document.getElementById('sum-email').textContent=email;
+  // SUMMARY
+  function buildSummary() {
+    const v = id => document.getElementById(id).value || '—';
+    const r = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : '—'; };
+    document.getElementById('sum-name').textContent     = (v('fname') + ' ' + v('lname')).trim();
+    document.getElementById('sum-zip').textContent      = v('zip');
+    document.getElementById('sum-vehicle').textContent  = [v('vyear'), v('vmake'), v('vmodel')].filter(x => x !== '—').join(' ') || '—';
+    document.getElementById('sum-coverage').textContent = r('covlevel');
+    document.getElementById('sum-email').textContent    = v('email');
   }
 
-  function startOver(){
-    document.querySelectorAll('input, select, textarea').forEach(el=>{
-      if(el.type==='radio'||el.type==='checkbox') el.checked=false;
-      else el.value='';
+  // COLLECT ALL DATA
+  function collectData() {
+    const v = id => document.getElementById(id).value || '';
+    const r = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; };
+    const addons = ['add_roadside','add_rental','add_gap','add_umbrella']
+      .filter(id => document.getElementById(id).checked)
+      .map(id => document.getElementById(id).nextElementSibling.textContent);
+    return {
+      submittedAt: new Date().toLocaleString(),
+      firstName: v('fname'), lastName: v('lname'), dateOfBirth: v('dob'),
+      gender: v('gender'), maritalStatus: v('marital'), zipCode: v('zip'),
+      email: v('email'), phone: v('phone'),
+      vehicleYear: v('vyear'), vehicleMake: v('vmake'), vehicleModel: v('vmodel'),
+      vehicleTrim: v('vtrim'), vehicleUse: v('vuse'), annualMileage: v('vmiles'),
+      ownership: v('vownership'), garagedOvernight: v('vgarage'),
+      licenseState: v('dlicense'), yearsLicensed: v('dlicenseyrs'),
+      goodDriver: r('gooddriver'), accidents: v('accidents'), violations: v('violations'),
+      additionalDrivers: r('addl'), occupation: v('occupation'), education: v('education'),
+      insuredStatus: r('insured'), currentCarrier: v('current_carrier'),
+      policyExpiration: v('current_exp'), coverageLevel: r('covlevel'),
+      deductible: v('deductible'), startDate: v('start_date'),
+      addOns: addons.join(', '), notes: v('notes')
+    };
+  }
+
+  // SUBMIT TO GOOGLE SHEETS
+  async function submitForm() {
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true; btn.textContent = 'Submitting…';
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(collectData())
+      });
+    } catch(e) { /* no-cors — still sends */ }
+    goTo(5);
+    btn.disabled = false; btn.textContent = '🎉 Get My Quotes!';
+  }
+
+  // RESET
+  function startOver() {
+    document.querySelectorAll('input,select,textarea').forEach(el => {
+      if (el.type === 'radio' || el.type === 'checkbox') el.checked = false;
+      else el.value = '';
     });
     goTo(1);
+  }
+
+  // FAQ
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!open) item.classList.add('open');
   }
 </script>
 </body>
