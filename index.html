@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InsuranceQuoteHub — Find Your Best Rate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:    #FDF6EC;
+      --warm1:    #F4A43A;
+      --warm2:    #E07B39;
+      --warm3:    #C0472B;
+      --amber:    #F9C46B;
+      --bark:     #5C3317;
+      --charcoal: #2B1F14;
+      --muted:    #8A6A50;
+      --white:    #FFFFFF;
+      --shadow:   rgba(92,51,23,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--bark);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--amber);
+      letter-spacing: -0.01em;
+    }
+    .logo span { color: var(--white); }
+
+    nav a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      margin-left: 1.6rem;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--amber); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--bark) 0%, #8B3A20 55%, var(--warm2) 100%);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(249,196,107,0.2);
+      border: 1px solid rgba(249,196,107,0.4);
+      color: var(--amber);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.18;
+      max-width: 640px;
+      margin: 0 auto 1rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--amber);
+    }
+
+    .hero p {
+      color: rgba(255,255,255,0.72);
+      font-size: 1.05rem;
+      max-width: 460px;
+      margin: 0 auto 2.4rem;
+      line-height: 1.6;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      color: var(--white);
+      text-align: center;
+    }
+    .stat strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--amber);
+    }
+    .stat span { font-size: 0.82rem; opacity: 0.7; }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      background: var(--white);
+      border-bottom: 1px solid rgba(92,51,23,0.1);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 68px;
+      z-index: 90;
+    }
+
+    .steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      flex: 1;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 60%;
+      right: -40%;
+      height: 2px;
+      background: #E8D5C0;
+      z-index: 0;
+    }
+
+    .step.active:not(:last-child)::after,
+    .step.done:not(:last-child)::after {
+      background: var(--warm1);
+    }
+
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #E8D5C0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+      transition: all .25s;
+    }
+
+    .step.active .step-num {
+      background: var(--warm2);
+      color: var(--white);
+      box-shadow: 0 0 0 4px rgba(224,123,57,0.2);
+    }
+
+    .step.done .step-num {
+      background: var(--warm1);
+      color: var(--white);
+    }
+
+    .step-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .step.active .step-label { color: var(--warm2); font-weight: 600; }
+    .step.done .step-label { color: var(--warm1); }
+
+    /* ── FORM CONTAINER ── */
+    .form-section {
+      max-width: 760px;
+      margin: 2.5rem auto 4rem;
+      padding: 0 1.5rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 2.4rem 2.8rem;
+      box-shadow: 0 4px 32px var(--shadow);
+      animation: fadeUp .4s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--bark);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-sub {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem 1.4rem;
+    }
+
+    .form-grid.full { grid-template-columns: 1fr; }
+    .span2 { grid-column: span 2; }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--bark);
+      margin-bottom: 0.38rem;
+      letter-spacing: 0.01em;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.68rem 0.9rem;
+      border: 1.5px solid #E0C9B4;
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.93rem;
+      color: var(--charcoal);
+      background: #FDFAF7;
+      transition: border-color .2s, box-shadow .2s;
+      appearance: none;
+      outline: none;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%238A6A50' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      padding-right: 2.2rem;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--warm1);
+      box-shadow: 0 0 0 3px rgba(244,164,58,0.18);
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    .radio-btn {
+      flex: 1;
+      min-width: 90px;
+    }
+
+    .radio-btn input[type="radio"] {
+      display: none;
+    }
+
+    .radio-btn label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 0.8rem;
+      border: 1.5px solid #E0C9B4;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      background: #FDFAF7;
+      transition: all .2s;
+      text-align: center;
+    }
+
+    .radio-btn input[type="radio"]:checked + label {
+      border-color: var(--warm1);
+      background: rgba(244,164,58,0.1);
+      color: var(--warm2);
+      font-weight: 600;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.78rem 2rem;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--warm1), var(--warm2));
+      color: var(--white);
+      box-shadow: 0 4px 16px rgba(224,123,57,0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(224,123,57,0.45);
+    }
+
+    .btn-back {
+      background: transparent;
+      color: var(--muted);
+      border: 1.5px solid #E0C9B4;
+    }
+
+    .btn-back:hover { background: #F9F1E8; color: var(--bark); }
+
+    /* ── CONFIRMATION ── */
+    .confirm-card {
+      text-align: center;
+      padding: 3rem 2.8rem;
+    }
+
+    .confirm-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--warm1), var(--warm2));
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.4rem;
+      font-size: 2rem;
+    }
+
+    .confirm-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      color: var(--bark);
+      margin-bottom: 0.6rem;
+    }
+
+    .confirm-card p {
+      color: var(--muted);
+      max-width: 420px;
+      margin: 0 auto 1.8rem;
+      line-height: 1.6;
+    }
+
+    .summary-box {
+      background: #FDF6EC;
+      border: 1px solid #E8D5C0;
+      border-radius: 12px;
+      padding: 1.4rem 1.8rem;
+      text-align: left;
+      margin-bottom: 1.8rem;
+    }
+
+    .summary-box h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid #F0E0CC;
+      color: var(--charcoal);
+    }
+
+    .summary-row:last-child { border-bottom: none; }
+    .summary-row span:first-child { color: var(--muted); }
+    .summary-row strong { color: var(--bark); }
+
+    /* ── TRUST BADGES ── */
+    .trust-strip {
+      background: #FDF0E0;
+      border-top: 1px solid #F0DEC8;
+      padding: 1.4rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--bark);
+    }
+
+    .trust-item span { font-size: 1.1rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 1.4rem;
+      font-size: 0.8rem;
+    }
+
+    footer strong { color: var(--amber); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 580px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .span2 { grid-column: span 1; }
+      .card { padding: 1.6rem 1.2rem; }
+      .hero { padding: 3.5rem 1.2rem 3rem; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Insurance<span>QuoteHub</span></div>
+  <nav>
+    <a href="#">How It Works</a>
+    <a href="#">Carriers</a>
+    <a href="#">FAQ</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">100% Free · No Obligation</div>
+  <h1>Your Best Car Insurance Rate Is <em>Waiting</em></h1>
+  <p>Answer a few quick questions and we'll match you with top-rated carriers in minutes.</p>
+  <div class="hero-stats">
+    <div class="stat"><strong>50+</strong><span>Top Carriers</span></div>
+    <div class="stat"><strong>$600+</strong><span>Avg. Annual Savings</span></div>
+    <div class="stat"><strong>2 Min</strong><span>To Get Quotes</span></div>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="steps">
+    <div class="step active" id="step-dot-1">
+      <div class="step-num">1</div>
+      <div class="step-label">Your Info</div>
+    </div>
+    <div class="step" id="step-dot-2">
+      <div class="step-num">2</div>
+      <div class="step-label">Your Vehicle</div>
+    </div>
+    <div class="step" id="step-dot-3">
+      <div class="step-num">3</div>
+      <div class="step-label">Drivers</div>
+    </div>
+    <div class="step" id="step-dot-4">
+      <div class="step-num">4</div>
+      <div class="step-label">Coverage</div>
+    </div>
+    <div class="step" id="step-dot-5">
+      <div class="step-num">✓</div>
+      <div class="step-label">Get Quotes</div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM SECTION -->
+<section class="form-section" id="form-section">
+
+  <!-- STEP 1: Personal Info -->
+  <div class="card" id="s1">
+    <div class="card-title">Tell us about yourself</div>
+    <div class="card-sub">Your personal details help us find accurate rates in your area.</div>
+    <div class="form-grid">
+      <div>
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" placeholder="Jane" />
+      </div>
+      <div>
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" placeholder="Smith" />
+      </div>
+      <div>
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" />
+      </div>
+      <div>
+        <label for="gender">Gender</label>
+        <select id="gender">
+          <option value="">Select…</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Non-binary</option>
+          <option>Prefer not to say</option>
+        </select>
+      </div>
+      <div>
+        <label for="marital">Marital Status</label>
+        <select id="marital">
+          <option value="">Select…</option>
+          <option>Single</option>
+          <option>Married</option>
+          <option>Divorced</option>
+          <option>Widowed</option>
+        </select>
+      </div>
+      <div>
+        <label for="zip">ZIP Code</label>
+        <input type="text" id="zip" placeholder="30625" maxlength="5" />
+      </div>
+      <div class="span2">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="jane@example.com" />
+      </div>
+      <div class="span2">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" placeholder="(555) 000-0000" />
+      </div>
+    </div>
+    <div class="btn-row">
+      <span style="font-size:0.8rem;color:var(--muted);">🔒 Your info is private & secure</span>
+      <button class="btn btn-primary" onclick="goTo(2)">Next: Your Vehicle →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Vehicle -->
+  <div class="card" id="s2" style="display:none;">
+    <div class="card-title">About your vehicle</div>
+    <div class="card-sub">We'll need details about the car you want to insure.</div>
+    <div class="form-grid">
+      <div>
+        <label for="vyear">Vehicle Year</label>
+        <select id="vyear">
+          <option value="">Select year…</option>
+        </select>
+      </div>
+      <div>
+        <label for="vmake">Make</label>
+        <select id="vmake">
+          <option value="">Select make…</option>
+          <option>Acura</option><option>Audi</option><option>BMW</option>
+          <option>Buick</option><option>Cadillac</option><option>Chevrolet</option>
+          <option>Chrysler</option><option>Dodge</option><option>Ford</option>
+          <option>GMC</option><option>Honda</option><option>Hyundai</option>
+          <option>Infiniti</option><option>Jeep</option><option>Kia</option>
+          <option>Lexus</option><option>Lincoln</option><option>Mazda</option>
+          <option>Mercedes-Benz</option><option>Nissan</option><option>Ram</option>
+          <option>Subaru</option><option>Tesla</option><option>Toyota</option>
+          <option>Volkswagen</option><option>Volvo</option><option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="vmodel">Model</label>
+        <input type="text" id="vmodel" placeholder="e.g. Camry, F-150…" />
+      </div>
+      <div>
+        <label for="vtrim">Trim / Style</label>
+        <input type="text" id="vtrim" placeholder="e.g. LE, XLT, Sport…" />
+      </div>
+      <div>
+        <label for="vuse">Primary Use</label>
+        <select id="vuse">
+          <option value="">Select…</option>
+          <option>Personal / Pleasure</option>
+          <option>Commute to Work</option>
+          <option>Business</option>
+          <option>Rideshare (Uber/Lyft)</option>
+          <option>Delivery</option>
+        </select>
+      </div>
+      <div>
+        <label for="vmiles">Annual Mileage</label>
+        <select id="vmiles">
+          <option value="">Select…</option>
+          <option>Under 5,000 miles</option>
+          <option>5,000 – 10,000 miles</option>
+          <option>10,000 – 15,000 miles</option>
+          <option>15,000 – 20,000 miles</option>
+          <option>Over 20,000 miles</option>
+        </select>
+      </div>
+      <div>
+        <label for="vownership">Ownership</label>
+        <select id="vownership">
+          <option value="">Select…</option>
+          <option>Owned outright</option>
+          <option>Financed / Loan</option>
+          <option>Leased</option>
+        </select>
+      </div>
+      <div>
+        <label for="vgarage">Garaged overnight?</label>
+        <select id="vgarage">
+          <option value="">Select…</option>
+          <option>Yes, in a garage</option>
+          <option>Yes, in a carport</option>
+          <option>No, on the street</option>
+          <option>No, in a driveway</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goTo(1)">← Back</button>
+      <button class="btn btn-primary" onclick="goTo(3)">Next: Drivers →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Drivers -->
+  <div class="card" id="s3" style="display:none;">
+    <div class="card-title">Driver information</div>
+    <div class="card-sub">Tell us about everyone who will drive this vehicle.</div>
+    <div class="form-grid">
+      <div>
+        <label for="dlicense">Driver's License State</label>
+        <select id="dlicense">
+          <option value="">Select state…</option>
+          <option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
+          <option>CA</option><option>CO</option><option>CT</option><option>DE</option>
+          <option>FL</option><option>GA</option><option>HI</option><option>ID</option>
+          <option>IL</option><option>IN</option><option>IA</option><option>KS</option>
+          <option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+          <option>MA</option><option>MI</option><option>MN</option><option>MS</option>
+          <option>MO</option><option>MT</option><option>NE</option><option>NV</option>
+          <option>NH</option><option>NJ</option><option>NM</option><option>NY</option>
+          <option>NC</option><option>ND</option><option>OH</option><option>OK</option>
+          <option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+          <option>SD</option><option>TN</option><option>TX</option><option>UT</option>
+          <option>VT</option><option>VA</option><option>WA</option><option>WV</option>
+          <option>WI</option><option>WY</option>
+        </select>
+      </div>
+      <div>
+        <label for="dlicenseyrs">Years Licensed</label>
+        <select id="dlicenseyrs">
+          <option value="">Select…</option>
+          <option>Less than 1 year</option>
+          <option>1–2 years</option>
+          <option>3–5 years</option>
+          <option>6–10 years</option>
+          <option>11–20 years</option>
+          <option>Over 20 years</option>
+        </select>
+      </div>
+      <div class="span2">
+        <label>Good Driver Discount eligible?</label>
+        <div class="radio-group">
+          <div class="radio-btn">
+            <input type="radio" name="gooddriver" id="gd_yes" value="yes"/>
+            <label for="gd_yes">Yes – no violations</label>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" name="gooddriver" id="gd_no" value="no"/>
+            <label for="gd_no">No – I have violations</label>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="accidents">Accidents (past 3 yrs)</label>
+        <select id="accidents">
+          <option value="">Select…</option>
+          <option>None</option>
+          <option>1 at-fault</option>
+          <option>2+ at-fault</option>
+          <option>1 not-at-fault</option>
+        </select>
+      </div>
+      <div>
+        <label for="violations">Violations (past 3 yrs)</label>
+        <select id="violations">
+          <option value="">Select…</option>
+          <option>None</option>
+          <option>1 minor (speeding, etc.)</option>
+          <option>2+ minor</option>
+          <option>DUI/DWI</option>
+          <option>Major violation</option>
+        </select>
+      </div>
+      <div class="span2">
+        <label>Additional drivers on the policy?</label>
+        <div class="radio-group">
+          <div class="radio-btn">
+            <input type="radio" name="addl" id="addl_no" value="no"/>
+            <label for="addl_no">Just me</label>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" name="addl" id="addl_yes" value="yes"/>
+            <label for="addl_yes">Yes, add more drivers</label>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="occupation">Occupation</label>
+        <select id="occupation">
+          <option value="">Select…</option>
+          <option>Employed full-time</option>
+          <option>Employed part-time</option>
+          <option>Self-employed</option>
+          <option>Student</option>
+          <option>Retired</option>
+          <option>Homemaker</option>
+          <option>Military</option>
+          <option>Unemployed</option>
+        </select>
+      </div>
+      <div>
+        <label for="education">Highest Education</label>
+        <select id="education">
+          <option value="">Select…</option>
+          <option>High school / GED</option>
+          <option>Some college</option>
+          <option>Associate's degree</option>
+          <option>Bachelor's degree</option>
+          <option>Graduate degree</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goTo(2)">← Back</button>
+      <button class="btn btn-primary" onclick="goTo(4)">Next: Coverage →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Coverage -->
+  <div class="card" id="s4" style="display:none;">
+    <div class="card-title">Choose your coverage</div>
+    <div class="card-sub">Select what's important to you — we'll find the best match.</div>
+    <div class="form-grid">
+      <div class="span2">
+        <label>Current insurance status</label>
+        <div class="radio-group">
+          <div class="radio-btn"><input type="radio" name="insured" id="ins_yes" value="yes"/><label for="ins_yes">Currently insured</label></div>
+          <div class="radio-btn"><input type="radio" name="insured" id="ins_no" value="no"/><label for="ins_no">Not currently insured</label></div>
+          <div class="radio-btn"><input type="radio" name="insured" id="ins_lapse" value="lapse"/><label for="ins_lapse">Lapsed policy</label></div>
+        </div>
+      </div>
+      <div>
+        <label for="current_carrier">Current Carrier (if any)</label>
+        <input type="text" id="current_carrier" placeholder="e.g. State Farm, Geico…" />
+      </div>
+      <div>
+        <label for="current_exp">Policy Expiration</label>
+        <input type="date" id="current_exp" />
+      </div>
+      <div class="span2">
+        <label>Coverage level desired</label>
+        <div class="radio-group">
+          <div class="radio-btn"><input type="radio" name="covlevel" id="cov_min" value="min"/><label for="cov_min">State Minimum</label></div>
+          <div class="radio-btn"><input type="radio" name="covlevel" id="cov_std" value="std"/><label for="cov_std">Standard</label></div>
+          <div class="radio-btn"><input type="radio" name="covlevel" id="cov_full" value="full"/><label for="cov_full">Full Coverage</label></div>
+        </div>
+      </div>
+      <div>
+        <label for="deductible">Preferred Deductible</label>
+        <select id="deductible">
+          <option value="">Select…</option>
+          <option>$250</option>
+          <option>$500</option>
+          <option>$1,000</option>
+          <option>$1,500</option>
+          <option>$2,000</option>
+          <option>No preference</option>
+        </select>
+      </div>
+      <div>
+        <label for="start_date">Desired Start Date</label>
+        <input type="date" id="start_date" />
+      </div>
+      <div class="span2">
+        <label>Optional add-ons (select all that apply)</label>
+        <div class="radio-group" style="flex-wrap:wrap;">
+          <div class="radio-btn"><input type="checkbox" id="add_roadside" /><label for="add_roadside" style="cursor:pointer;">Roadside Assistance</label></div>
+          <div class="radio-btn"><input type="checkbox" id="add_rental" /><label for="add_rental" style="cursor:pointer;">Rental Reimbursement</label></div>
+          <div class="radio-btn"><input type="checkbox" id="add_gap" /><label for="add_gap" style="cursor:pointer;">GAP Coverage</label></div>
+          <div class="radio-btn"><input type="checkbox" id="add_umbrella" /><label for="add_umbrella" style="cursor:pointer;">Umbrella Policy</label></div>
+        </div>
+      </div>
+      <div class="span2">
+        <label for="notes">Anything else we should know?</label>
+        <textarea id="notes" rows="3" placeholder="Military service, good student discount, multi-policy discount, etc."></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goTo(3)">← Back</button>
+      <button class="btn btn-primary" onclick="goTo(5)">🎉 Get My Quotes!</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Confirmation -->
+  <div class="card confirm-card" id="s5" style="display:none;">
+    <div class="confirm-icon">🎉</div>
+    <h2>You're all set!</h2>
+    <p>We're matching you with top-rated carriers right now. Expect quotes in your inbox within minutes.</p>
+    <div class="summary-box">
+      <h4>Your Quote Summary</h4>
+      <div class="summary-row"><span>Name</span><strong id="sum-name">—</strong></div>
+      <div class="summary-row"><span>Location</span><strong id="sum-zip">—</strong></div>
+      <div class="summary-row"><span>Vehicle</span><strong id="sum-vehicle">—</strong></div>
+      <div class="summary-row"><span>Coverage</span><strong id="sum-coverage">—</strong></div>
+      <div class="summary-row"><span>Email</span><strong id="sum-email">—</strong></div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;padding:1rem;" onclick="startOver()">Start a New Quote</button>
+  </div>
+
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-item"><span>🔒</span> SSL Encrypted</div>
+  <div class="trust-item"><span>🛡️</span> No Spam, Ever</div>
+  <div class="trust-item"><span>⭐</span> 50+ Top Carriers</div>
+  <div class="trust-item"><span>✅</span> Free, No Obligation</div>
+  <div class="trust-item"><span>🚗</span> All Vehicle Types</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 <strong>InsuranceQuoteHub.com</strong> · This site is not an insurance company. We help connect consumers with licensed insurance agents and carriers. &nbsp;|&nbsp; Privacy Policy &nbsp;|&nbsp; Terms of Use
+</footer>
+
+<script>
+  // Populate year dropdown
+  const yrSel = document.getElementById('vyear');
+  for (let y = new Date().getFullYear() + 1; y >= 1990; y--) {
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y;
+    yrSel.appendChild(o);
+  }
+
+  let currentStep = 1;
+
+  function goTo(step) {
+    // Update summary on final step
+    if (step === 5) buildSummary();
+
+    // Hide all cards
+    for (let i = 1; i <= 5; i++) {
+      document.getElementById('s' + i).style.display = 'none';
+    }
+
+    // Show target card with animation
+    const card = document.getElementById('s' + step);
+    card.style.display = 'block';
+    card.style.animation = 'none';
+    requestAnimationFrame(() => {
+      card.style.animation = 'fadeUp .4s ease both';
+    });
+
+    // Update step dots
+    for (let i = 1; i <= 5; i++) {
+      const dot = document.getElementById('step-dot-' + i);
+      dot.className = 'step';
+      if (i < step) dot.classList.add('done');
+      else if (i === step) dot.classList.add('active');
+    }
+
+    currentStep = step;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function buildSummary() {
+    const fname = document.getElementById('fname').value || '—';
+    const lname = document.getElementById('lname').value || '';
+    const zip   = document.getElementById('zip').value || '—';
+    const year  = document.getElementById('vyear').value || '';
+    const make  = document.getElementById('vmake').value || '';
+    const model = document.getElementById('vmodel').value || '';
+    const email = document.getElementById('email').value || '—';
+    const covEl = document.querySelector('input[name="covlevel"]:checked');
+    const cov   = covEl ? covEl.nextElementSibling.textContent : '—';
+
+    document.getElementById('sum-name').textContent    = `${fname} ${lname}`.trim() || '—';
+    document.getElementById('sum-zip').textContent     = zip;
+    document.getElementById('sum-vehicle').textContent = [year, make, model].filter(Boolean).join(' ') || '—';
+    document.getElementById('sum-coverage').textContent = cov;
+    document.getElementById('sum-email').textContent   = email;
+  }
+
+  function startOver() {
+    // Reset all fields
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+      if (el.type === 'radio' || el.type === 'checkbox') el.checked = false;
+      else el.value = '';
+    });
+    goTo(1);
+  }
+</script>
+</body>
+</html>
