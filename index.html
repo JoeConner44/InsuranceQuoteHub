@@ -21,6 +21,28 @@
     nav a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:0.88rem; font-weight:500; margin-left:1.6rem; transition:color .2s; cursor:pointer; }
     nav a:hover, nav a.active-nav { color:var(--amber); }
 
+    /* HAMBURGER */
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
+    .hamburger span { display:block; width:24px; height:2px; background:var(--white); border-radius:2px; transition:all .25s; }
+    .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity:0; }
+    .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+    /* MOBILE DRAWER */
+    .mobile-nav {
+      display:none; position:fixed; top:68px; left:0; right:0; z-index:99;
+      background:var(--bark); flex-direction:column; padding:0.6rem 0 1rem;
+      box-shadow:0 8px 24px rgba(0,0,0,0.25);
+    }
+    .mobile-nav.open { display:flex; }
+    .mobile-nav a {
+      color:rgba(255,255,255,0.8); font-size:0.95rem; font-weight:500;
+      padding:0.85rem 2rem; border-bottom:1px solid rgba(255,255,255,0.07);
+      cursor:pointer; transition:background .15s, color .15s;
+    }
+    .mobile-nav a:last-child { border-bottom:none; }
+    .mobile-nav a:hover, .mobile-nav a.active-nav { background:rgba(255,255,255,0.08); color:var(--amber); }
+
     /* PAGES */
     .page { display:none; }
     .page.active { display:block; }
@@ -73,29 +95,11 @@
     input:focus,select:focus,textarea:focus { border-color:var(--warm1); box-shadow:0 0 0 3px rgba(244,164,58,0.18); }
 
     /* VALIDATION STATES */
-    input.invalid, select.invalid, textarea.invalid {
-      border-color:var(--error) !important;
-      background:var(--error-bg);
-      box-shadow:0 0 0 3px rgba(192,57,43,0.12) !important;
-    }
-    .field-error {
-      font-size:0.75rem; color:var(--error); margin-top:0.3rem;
-      display:none; align-items:center; gap:0.3rem;
-    }
+    input.invalid, select.invalid, textarea.invalid { border-color:var(--error) !important; background:var(--error-bg); box-shadow:0 0 0 3px rgba(192,57,43,0.12) !important; }
+    .field-error { font-size:0.75rem; color:var(--error); margin-top:0.3rem; display:none; align-items:center; gap:0.3rem; }
     .field-error.show { display:flex; }
-
-    /* VALIDATION STATES FOR RADIO/CHECKBOX GROUPS */
-    .radio-group.invalid-group .radio-btn label {
-      border-color:var(--error);
-      background:var(--error-bg);
-    }
-
-    /* ERROR BANNER */
-    .error-banner {
-      background:var(--error-bg); border:1.5px solid var(--error); border-radius:10px;
-      padding:0.9rem 1.2rem; margin-bottom:1.4rem; font-size:0.88rem; color:var(--error);
-      font-weight:600; display:none; align-items:center; gap:0.6rem;
-    }
+    .radio-group.invalid-group .radio-btn label { border-color:var(--error); background:var(--error-bg); }
+    .error-banner { background:var(--error-bg); border:1.5px solid var(--error); border-radius:10px; padding:0.9rem 1.2rem; margin-bottom:1.4rem; font-size:0.88rem; color:var(--error); font-weight:600; display:none; align-items:center; gap:0.6rem; }
     .error-banner.show { display:flex; }
 
     /* RADIO / CHECKBOX */
@@ -106,17 +110,10 @@
     .radio-btn input[type="radio"]:checked+label,.radio-btn input[type="checkbox"]:checked+label { border-color:var(--warm1); background:rgba(244,164,58,0.1); color:var(--warm2); font-weight:600; }
 
     /* CONSENT */
-    .consent-block {
-      background:#FDF6EC; border:1.5px solid #E8D5C0; border-radius:12px;
-      padding:1.2rem 1.4rem; margin-top:1.6rem;
-    }
+    .consent-block { background:#FDF6EC; border:1.5px solid #E8D5C0; border-radius:12px; padding:1.2rem 1.4rem; margin-top:1.6rem; }
     .consent-block.invalid-group { border-color:var(--error); background:var(--error-bg); }
     .consent-row { display:flex; gap:0.8rem; align-items:flex-start; }
-    .consent-row input[type="checkbox"] {
-      width:18px; height:18px; min-width:18px; margin-top:2px; cursor:pointer;
-      accent-color:var(--warm2); border:2px solid #E0C9B4; border-radius:4px;
-      display:block; appearance:auto;
-    }
+    .consent-row input[type="checkbox"] { width:18px; height:18px; min-width:18px; margin-top:2px; cursor:pointer; accent-color:var(--warm2); border:2px solid #E0C9B4; border-radius:4px; display:block; appearance:auto; }
     .consent-text { font-size:0.8rem; color:var(--muted); line-height:1.55; }
     .consent-text strong { color:var(--bark); }
 
@@ -179,25 +176,39 @@
     /* FOOTER */
     footer { background:var(--charcoal); color:rgba(255,255,255,0.5); text-align:center; padding:1.4rem; font-size:0.8rem; }
     footer strong { color:var(--amber); }
+    footer a { color:rgba(255,255,255,0.5); text-decoration:none; }
+    footer a:hover { color:var(--amber); }
 
     /* RESPONSIVE */
-    @media(max-width:580px){
+    @media(max-width:640px){
       .form-grid{grid-template-columns:1fr} .span2{grid-column:span 1}
       .card{padding:1.6rem 1.2rem} .hero{padding:3.5rem 1.2rem 3rem}
-      nav{display:none} .why-grid{grid-template-columns:1fr}
+      nav{display:none} .hamburger{display:flex} .why-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo" onclick="showPage('home')">Insurance<span>QuoteHub</span></div>
+  <div class="logo" onclick="showPage('home');closeMobileNav()">Insurance<span>QuoteHub</span></div>
   <nav>
     <a onclick="showPage('home')" id="nav-home">Home</a>
     <a onclick="showPage('howitworks')" id="nav-howitworks">How It Works</a>
     <a onclick="showPage('faq')" id="nav-faq">FAQ</a>
+    <a onclick="showPage('blog')" id="nav-blog">Insurance 101</a>
   </nav>
+  <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-nav" id="mobile-nav">
+  <a onclick="showPage('home');closeMobileNav()" id="mnav-home">Home</a>
+  <a onclick="showPage('howitworks');closeMobileNav()" id="mnav-howitworks">How It Works</a>
+  <a onclick="showPage('faq');closeMobileNav()" id="mnav-faq">FAQ</a>
+  <a onclick="showPage('blog');closeMobileNav()" id="mnav-blog">Insurance 101</a>
+</div>
 
 
 <!-- ══════════ PAGE: HOME ══════════ -->
@@ -226,7 +237,7 @@
 
   <section class="form-section">
 
-    <!-- ── STEP 1: Personal Info ── -->
+    <!-- STEP 1 -->
     <div class="card" id="s1">
       <div class="card-title">Tell us about yourself</div>
       <div class="card-sub">All fields are required to generate your quote.</div>
@@ -285,7 +296,7 @@
       </div>
     </div>
 
-    <!-- ── STEP 2: Vehicle ── -->
+    <!-- STEP 2 -->
     <div class="card" id="s2" style="display:none">
       <div class="card-title">About your vehicle</div>
       <div class="card-sub">All fields are required to generate your quote.</div>
@@ -362,7 +373,7 @@
       </div>
     </div>
 
-    <!-- ── STEP 3: Drivers ── -->
+    <!-- STEP 3 -->
     <div class="card" id="s3" style="display:none">
       <div class="card-title">Driver information</div>
       <div class="card-sub">All fields are required to generate your quote.</div>
@@ -452,7 +463,7 @@
       </div>
     </div>
 
-    <!-- ── STEP 4: Coverage ── -->
+    <!-- STEP 4 -->
     <div class="card" id="s4" style="display:none">
       <div class="card-title">Choose your coverage</div>
       <div class="card-sub">All fields are required to generate your quote.</div>
@@ -518,7 +529,7 @@
         <div class="consent-row">
           <input type="checkbox" id="tcpa_consent"/>
           <div class="consent-text">
-            <strong>By checking this box and clicking "Get My Quotes!" I agree</strong> to be contacted by InsuranceQuoteHub.com and its network of licensed insurance agents and carriers by phone call, text message (SMS), and/or email regarding auto insurance quotes and products, even if my number is on a state or federal Do Not Call registry. I understand this consent is not required to purchase any goods or services. Message and data rates may apply. I have read and agree to the <a href="/privacy" style="color:var(--warm2)">Privacy Policy</a> and <a href="/terms" style="color:var(--warm2)">Terms of Use</a>
+            <strong>By checking this box and clicking "Get My Quotes!" I agree</strong> to be contacted by InsQuoteHub.com and its network of licensed insurance agents and carriers by phone call, text message (SMS), and/or email regarding auto insurance quotes and products, even if my number is on a state or federal Do Not Call registry. I understand this consent is not required to purchase any goods or services. Message and data rates may apply. I have read and agree to the <a href="/privacy" style="color:var(--warm2)">Privacy Policy</a> and <a href="/terms" style="color:var(--warm2)">Terms of Use</a>.
           </div>
         </div>
         <div class="field-error" id="err-consent" style="margin-top:0.5rem">You must agree to the consent terms to continue.</div>
@@ -530,7 +541,7 @@
       </div>
     </div>
 
-    <!-- ── STEP 5: Confirmation ── -->
+    <!-- STEP 5 -->
     <div class="card confirm-card" id="s5" style="display:none">
       <div class="confirm-icon">🎉</div>
       <h2>You're all set!</h2>
@@ -566,13 +577,12 @@
   </div>
   <div class="content-body">
     <div class="hiw-steps">
-      <div class="hiw-step"><div class="hiw-icon">📝</div><div class="hiw-num">STEP 1</div><h3>Answer a Few Questions</h3><p>Tell us about yourself, your vehicle, your driving history, and the coverage you want. About 2 minutes total.</p></div>
-      <div class="hiw-step"><div class="hiw-icon">🔍</div><div class="hiw-num">STEP 2</div><h3>We Search 50+ Carriers</h3><p>Our system instantly compares rates from over 50 top-rated insurance companies to find the best options for your profile.</p></div>
-      <div class="hiw-step"><div class="hiw-icon">📊</div><div class="hiw-num">STEP 3</div><h3>Review Your Quotes</h3><p>Get multiple competitive quotes delivered to your inbox — side by side so you can compare coverage and pricing easily.</p></div>
-      <div class="hiw-step"><div class="hiw-icon">✅</div><div class="hiw-num">STEP 4</div><h3>Choose &amp; Save</h3><p>Pick the plan that fits your budget and needs. Licensed agents are standing by to help if you have questions.</p></div>
+      <div class="hiw-step"><div class="hiw-icon">📝</div><div class="hiw-num">STEP 1</div><h3>Answer a Few Questions</h3><p>Tell us about yourself, your vehicle, your driving history, and the coverage you want. Takes about 2 minutes and it's completely free.</p></div>
+      <div class="hiw-step"><div class="hiw-icon">⏳</div><div class="hiw-num">STEP 2</div><h3>Experts Go to Work for You</h3><p>Sit back while our network of licensed insurance agents and top-rated carriers review your profile and put together their most competitive quotes just for you.</p></div>
+      <div class="hiw-step"><div class="hiw-icon">🏆</div><div class="hiw-num">STEP 3</div><h3>Pick the Plan That Fits You</h3><p>Review your quotes side by side and choose the coverage and price that works best for your situation. No pressure, no obligation — ever.</p></div>
     </div>
     <div style="background:var(--white);border-radius:16px;padding:2rem 2.5rem;box-shadow:0 4px 20px var(--shadow);margin-bottom:2rem">
-      <h2 style="font-family:'Playfair Display',serif;color:var(--bark);margin-bottom:1.2rem">Why InsuranceQuoteHub?</h2>
+      <h2 style="font-family:'Playfair Display',serif;color:var(--bark);margin-bottom:1.2rem">Why InsQuoteHub?</h2>
       <div class="why-grid">
         <div class="why-item"><span style="font-size:1.4rem">💰</span><div><strong style="color:var(--bark);display:block;margin-bottom:0.2rem">Save Money</strong><span style="font-size:0.88rem;color:var(--muted)">Customers save an average of $600+ per year by switching.</span></div></div>
         <div class="why-item"><span style="font-size:1.4rem">🚫</span><div><strong style="color:var(--bark);display:block;margin-bottom:0.2rem">No Obligation</strong><span style="font-size:0.88rem;color:var(--muted)">Browse quotes freely. You're never required to purchase anything.</span></div></div>
@@ -582,7 +592,7 @@
     </div>
     <div class="hiw-cta">
       <h3>Ready to Find Your Best Rate?</h3>
-      <p>Join thousands of drivers who've already saved with InsuranceQuoteHub.</p>
+      <p>Join thousands of drivers who've already saved with InsQuoteHub.</p>
       <button onclick="showPage('home')">Get My Free Quotes →</button>
     </div>
   </div>
@@ -593,11 +603,11 @@
 <div class="page" id="page-faq">
   <div class="content-hero">
     <h1>Frequently Asked Questions</h1>
-    <p>Everything you need to know about getting a quote through InsuranceQuoteHub.</p>
+    <p>Everything you need to know about getting a quote through InsQuoteHub.</p>
   </div>
   <div class="content-body">
     <div class="faq-list">
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is InsuranceQuoteHub free to use?<span class="faq-arrow">▼</span></button><div class="faq-a">Yes, completely free. We are compensated by the insurance carriers when you purchase a policy — you never pay us anything. There is also no obligation to buy; you're free to compare quotes and walk away at any time.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is InsQuoteHub free to use?<span class="faq-arrow">▼</span></button><div class="faq-a">Yes, completely free. We are compensated by the insurance carriers when you purchase a policy — you never pay us anything. There is also no obligation to buy; you're free to compare quotes and walk away at any time.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Will getting a quote affect my credit score?<span class="faq-arrow">▼</span></button><div class="faq-a">No. Insurance quote requests use a "soft pull" on your credit, which does not affect your credit score in any way. This is different from a loan application, which uses a "hard pull." You can request as many quotes as you like without any impact to your credit.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How quickly will I receive my quotes?<span class="faq-arrow">▼</span></button><div class="faq-a">Most customers receive their initial quotes within minutes of submitting the form. A licensed agent may also follow up by phone or email within 24 hours to walk you through your options and answer any questions.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What information do I need to get a quote?<span class="faq-arrow">▼</span></button><div class="faq-a">You'll need basic personal info (name, date of birth, address), your vehicle details (year, make, model), your driver's license information, and your current insurance status. The whole process takes about 2 minutes. You do not need your VIN or policy number to get started.</div></div>
@@ -610,8 +620,92 @@
   </div>
 </div>
 
+
+<!-- ══════════ PAGE: INSURANCE 101 ══════════ -->
+<div class="page" id="page-blog">
+  <div class="content-hero">
+    <h1>Insurance 101</h1>
+    <p>Plain-English guides to help you understand auto insurance and make smarter decisions.</p>
+  </div>
+  <div class="content-body">
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-bottom:3rem">
+
+      <div style="background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px var(--shadow);transition:transform .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="background:linear-gradient(135deg,var(--bark),var(--warm2));padding:1.6rem;font-size:2.2rem">🛡️</div>
+        <div style="padding:1.4rem">
+          <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm1);margin-bottom:0.5rem">Coverage Basics</div>
+          <h3 style="font-family:'Playfair Display',serif;color:var(--bark);font-size:1.1rem;margin-bottom:0.6rem">Liability vs. Full Coverage: What's the Difference?</h3>
+          <p style="font-size:0.87rem;color:var(--muted);line-height:1.6;margin-bottom:1rem">Confused about what your policy actually covers? We break down the two most common coverage types in plain English so you know exactly what you're paying for.</p>
+          <div style="font-size:0.82rem;color:var(--muted)">5 min read</div>
+        </div>
+      </div>
+
+      <div style="background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px var(--shadow);transition:transform .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="background:linear-gradient(135deg,#5C3317,#E07B39);padding:1.6rem;font-size:2.2rem">💰</div>
+        <div style="padding:1.4rem">
+          <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm1);margin-bottom:0.5rem">Saving Money</div>
+          <h3 style="font-family:'Playfair Display',serif;color:var(--bark);font-size:1.1rem;margin-bottom:0.6rem">7 Discounts Most Drivers Don't Know They Qualify For</h3>
+          <p style="font-size:0.87rem;color:var(--muted);line-height:1.6;margin-bottom:1rem">From good driver discounts to bundling your home and auto, there are more ways to lower your premium than you might think. Here's what to ask about.</p>
+          <div style="font-size:0.82rem;color:var(--muted)">6 min read</div>
+        </div>
+      </div>
+
+      <div style="background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px var(--shadow);transition:transform .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="background:linear-gradient(135deg,#8B3A20,var(--warm1));padding:1.6rem;font-size:2.2rem">📋</div>
+        <div style="padding:1.4rem">
+          <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm1);margin-bottom:0.5rem">Getting Covered</div>
+          <h3 style="font-family:'Playfair Display',serif;color:var(--bark);font-size:1.1rem;margin-bottom:0.6rem">What Happens If You Drive Without Insurance?</h3>
+          <p style="font-size:0.87rem;color:var(--muted);line-height:1.6;margin-bottom:1rem">The penalties for driving uninsured vary by state but can include fines, license suspension, and personal liability for accidents. Here's what's at stake.</p>
+          <div style="font-size:0.82rem;color:var(--muted)">4 min read</div>
+        </div>
+      </div>
+
+      <div style="background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px var(--shadow);transition:transform .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="background:linear-gradient(135deg,var(--warm2),var(--amber));padding:1.6rem;font-size:2.2rem">🚗</div>
+        <div style="padding:1.4rem">
+          <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm1);margin-bottom:0.5rem">Your Vehicle</div>
+          <h3 style="font-family:'Playfair Display',serif;color:var(--bark);font-size:1.1rem;margin-bottom:0.6rem">How Your Car Choice Affects Your Insurance Rate</h3>
+          <p style="font-size:0.87rem;color:var(--muted);line-height:1.6;margin-bottom:1rem">The make, model, and year of your vehicle can significantly impact what you pay. We explain what insurers look at and what it means for your wallet.</p>
+          <div style="font-size:0.82rem;color:var(--muted)">5 min read</div>
+        </div>
+      </div>
+
+      <div style="background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px var(--shadow);transition:transform .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="background:linear-gradient(135deg,var(--bark),#C0472B);padding:1.6rem;font-size:2.2rem">📊</div>
+        <div style="padding:1.4rem">
+          <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm1);margin-bottom:0.5rem">Understanding Rates</div>
+          <h3 style="font-family:'Playfair Display',serif;color:var(--bark);font-size:1.1rem;margin-bottom:0.6rem">Why Two Drivers Pay Completely Different Rates</h3>
+          <p style="font-size:0.87rem;color:var(--muted);line-height:1.6;margin-bottom:1rem">Age, location, driving record, credit score — carriers weigh dozens of factors when setting your rate. Understanding them helps you shop smarter.</p>
+          <div style="font-size:0.82rem;color:var(--muted)">7 min read</div>
+        </div>
+      </div>
+
+      <div style="background:var(--white);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px var(--shadow);transition:transform .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="background:linear-gradient(135deg,#8B3A20,var(--bark));padding:1.6rem;font-size:2.2rem">🔄</div>
+        <div style="padding:1.4rem">
+          <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm1);margin-bottom:0.5rem">Switching</div>
+          <h3 style="font-family:'Playfair Display',serif;color:var(--bark);font-size:1.1rem;margin-bottom:0.6rem">When Is the Right Time to Switch Insurance Carriers?</h3>
+          <p style="font-size:0.87rem;color:var(--muted);line-height:1.6;margin-bottom:1rem">You're never locked in. We walk you through how to switch without any coverage gaps, and the moments when shopping around is most likely to save you money.</p>
+          <div style="font-size:0.82rem;color:var(--muted)">5 min read</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="background:linear-gradient(135deg,var(--warm1),var(--warm2));border-radius:16px;padding:2.5rem;text-align:center">
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--white);margin-bottom:0.6rem">Ready to Put This Knowledge to Work?</h3>
+      <p style="color:rgba(255,255,255,0.85);margin-bottom:1.4rem">Get free quotes from top-rated carriers in 2 minutes — no obligation, ever.</p>
+      <button onclick="showPage('home')" style="background:var(--white);color:var(--warm2);border:none;padding:0.85rem 2.4rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Get My Free Quotes →</button>
+    </div>
+
+  </div>
+</div>
+
+
 <footer>
- © 2026 <strong>InsQuoteHub.com</strong> · This site is not an insurance company. We help connect consumers with licensed insurance agents and carriers. &nbsp;|&nbsp; <a href="/privacy" style="color:rgba(255,255,255,0.5)">Privacy Policy</a> &nbsp;|&nbsp; <a href="/terms" style="color:rgba(255,255,255,0.5)">Terms of Use</a>
+  © 2026 <strong>InsQuoteHub.com</strong> · This site is not an insurance company. We help connect consumers with licensed insurance agents and carriers. &nbsp;|&nbsp; <a href="/privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/terms">Terms of Use</a>
+</footer>
 
 <script>
   const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwg0hOKP183ExUHlIerGMgI0_21XLr_kFcuT4cjXC9chyJKIJ91VvdkwDETWciAot-L/exec';
@@ -633,14 +727,9 @@
     e.target.value = val;
   });
 
-  // ── VALIDATORS ──
-  function isValidEmail(v) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
-  }
-  function isValidPhone(v) {
-    const digits = v.replace(/\D/g,'');
-    return digits.length === 10 && digits[0] !== '0' && digits[0] !== '1';
-  }
+  // VALIDATORS
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
+  function isValidPhone(v) { const d = v.replace(/\D/g,''); return d.length === 10 && d[0] !== '0' && d[0] !== '1'; }
   function isValidDOB(v) {
     if (!v) return false;
     const dob = new Date(v + 'T00:00:00');
@@ -650,38 +739,22 @@
     const age = today.getFullYear() - dob.getFullYear() - (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate()) ? 1 : 0);
     return age >= 16 && age <= 100;
   }
-  function isValidZip(v) {
-    return /^\d{5}$/.test(v.trim());
-  }
+  function isValidZip(v) { return /^\d{5}$/.test(v.trim()); }
 
-  // Mark a field invalid or clear it
   function setInvalid(id, errId, invalid) {
     const el = document.getElementById(id);
     const err = document.getElementById(errId);
     if (!el || !err) return;
-    if (invalid) {
-      el.classList.add('invalid');
-      err.classList.add('show');
-    } else {
-      el.classList.remove('invalid');
-      err.classList.remove('show');
-    }
+    if (invalid) { el.classList.add('invalid'); err.classList.add('show'); }
+    else { el.classList.remove('invalid'); err.classList.remove('show'); }
   }
-
   function setGroupInvalid(groupId, errId, invalid) {
     const el = document.getElementById(groupId);
     const err = document.getElementById(errId);
     if (!el || !err) return;
-    if (invalid) {
-      el.classList.add('invalid-group');
-      err.classList.add('show');
-    } else {
-      el.classList.remove('invalid-group');
-      err.classList.remove('show');
-    }
+    if (invalid) { el.classList.add('invalid-group'); err.classList.add('show'); }
+    else { el.classList.remove('invalid-group'); err.classList.remove('show'); }
   }
-
-  // Clear all validation on a step
   function clearValidation(step) {
     document.querySelectorAll('#s' + step + ' .invalid').forEach(el => el.classList.remove('invalid'));
     document.querySelectorAll('#s' + step + ' .invalid-group').forEach(el => el.classList.remove('invalid-group'));
@@ -690,91 +763,56 @@
     if (step === 4) document.getElementById('consent-block').classList.remove('invalid-group');
   }
 
-  // ── STEP VALIDATION ──
   function validateStep(step) {
     let valid = true;
     clearValidation(step);
-
     if (step === 1) {
       const fname = document.getElementById('fname').value.trim();
       const lname = document.getElementById('lname').value.trim();
       const dob   = document.getElementById('dob').value;
-      const gender = document.getElementById('gender').value;
+      const gender  = document.getElementById('gender').value;
       const marital = document.getElementById('marital').value;
       const zip   = document.getElementById('zip').value.trim();
       const email = document.getElementById('email').value.trim();
       const phone = document.getElementById('phone').value;
-
-      if (!fname)                { setInvalid('fname','err-fname',true); valid=false; }
-      if (!lname)                { setInvalid('lname','err-lname',true); valid=false; }
-      if (!isValidDOB(dob))      { setInvalid('dob','err-dob',true); valid=false; }
-      if (!gender)               { setInvalid('gender','err-gender',true); valid=false; }
-      if (!marital)              { setInvalid('marital','err-marital',true); valid=false; }
-      if (!isValidZip(zip))      { setInvalid('zip','err-zip',true); valid=false; }
-      if (!isValidEmail(email))  { setInvalid('email','err-email',true); valid=false; }
-      if (!isValidPhone(phone))  { setInvalid('phone','err-phone',true); valid=false; }
+      if (!fname)               { setInvalid('fname','err-fname',true); valid=false; }
+      if (!lname)               { setInvalid('lname','err-lname',true); valid=false; }
+      if (!isValidDOB(dob))     { setInvalid('dob','err-dob',true); valid=false; }
+      if (!gender)              { setInvalid('gender','err-gender',true); valid=false; }
+      if (!marital)             { setInvalid('marital','err-marital',true); valid=false; }
+      if (!isValidZip(zip))     { setInvalid('zip','err-zip',true); valid=false; }
+      if (!isValidEmail(email)) { setInvalid('email','err-email',true); valid=false; }
+      if (!isValidPhone(phone)) { setInvalid('phone','err-phone',true); valid=false; }
     }
-
     if (step === 2) {
-      const fields = ['vyear','vmake','vmodel','vtrim','vuse','vmiles','vownership','vgarage'];
-      fields.forEach(id => {
-        if (!document.getElementById(id).value.trim()) {
-          setInvalid(id, 'err-'+id, true); valid=false;
-        }
+      ['vyear','vmake','vmodel','vtrim','vuse','vmiles','vownership','vgarage'].forEach(id => {
+        if (!document.getElementById(id).value.trim()) { setInvalid(id,'err-'+id,true); valid=false; }
       });
     }
-
     if (step === 3) {
-      const selects = ['dlicense','dlicenseyrs','accidents','violations','occupation','education'];
-      selects.forEach(id => {
-        if (!document.getElementById(id).value) {
-          setInvalid(id, 'err-'+id, true); valid=false;
-        }
+      ['dlicense','dlicenseyrs','accidents','violations','occupation','education'].forEach(id => {
+        if (!document.getElementById(id).value) { setInvalid(id,'err-'+id,true); valid=false; }
       });
-      if (!document.querySelector('input[name="gooddriver"]:checked')) {
-        setGroupInvalid('rg-gooddriver','err-gooddriver',true); valid=false;
-      }
-      if (!document.querySelector('input[name="addl"]:checked')) {
-        setGroupInvalid('rg-addl','err-addl',true); valid=false;
-      }
+      if (!document.querySelector('input[name="gooddriver"]:checked')) { setGroupInvalid('rg-gooddriver','err-gooddriver',true); valid=false; }
+      if (!document.querySelector('input[name="addl"]:checked'))       { setGroupInvalid('rg-addl','err-addl',true); valid=false; }
     }
-
     if (step === 4) {
-      if (!document.querySelector('input[name="insured"]:checked')) {
-        setGroupInvalid('rg-insured','err-insured',true); valid=false;
-      }
-      if (!document.querySelector('input[name="covlevel"]:checked')) {
-        setGroupInvalid('rg-covlevel','err-covlevel',true); valid=false;
-      }
-      if (!document.getElementById('deductible').value) {
-        setInvalid('deductible','err-deductible',true); valid=false;
-      }
-      if (!document.getElementById('start_date').value) {
-        setInvalid('start_date','err-start_date',true); valid=false;
-      }
+      if (!document.querySelector('input[name="insured"]:checked'))  { setGroupInvalid('rg-insured','err-insured',true); valid=false; }
+      if (!document.querySelector('input[name="covlevel"]:checked')) { setGroupInvalid('rg-covlevel','err-covlevel',true); valid=false; }
+      if (!document.getElementById('deductible').value)  { setInvalid('deductible','err-deductible',true); valid=false; }
+      if (!document.getElementById('start_date').value)  { setInvalid('start_date','err-start_date',true); valid=false; }
       if (!document.getElementById('tcpa_consent').checked) {
         document.getElementById('consent-block').classList.add('invalid-group');
         document.getElementById('err-consent').classList.add('show');
         valid=false;
       }
     }
-
-    if (!valid) {
-      document.getElementById('err' + step).classList.add('show');
-    }
+    if (!valid) document.getElementById('err' + step).classList.add('show');
     return valid;
   }
 
-  // ── NAVIGATION ──
-  function validateAndGo(fromStep, toStep) {
-    if (!validateStep(fromStep)) return;
-    goTo(toStep);
-  }
-
-  function validateAndSubmit() {
-    if (!validateStep(4)) return;
-    submitForm();
-  }
+  function validateAndGo(fromStep, toStep) { if (!validateStep(fromStep)) return; goTo(toStep); }
+  function validateAndSubmit() { if (!validateStep(4)) return; submitForm(); }
 
   let currentStep = 1;
   function goTo(step) {
@@ -791,18 +829,36 @@
       else if (i === step) dot.classList.add('active');
     }
     currentStep = step;
-    // no scroll
   }
 
   // PAGE NAV
   function showPage(name) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + name).classList.add('active');
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-nav'));
+    document.querySelectorAll('nav a, .mobile-nav a').forEach(a => a.classList.remove('active-nav'));
     const nav = document.getElementById('nav-' + name);
     if (nav) nav.classList.add('active-nav');
+    const mnav = document.getElementById('mnav-' + name);
+    if (mnav) mnav.classList.add('active-nav');
     document.documentElement.scrollTop = 0;
   }
+
+  // HAMBURGER
+  function toggleMobileNav() {
+    document.getElementById('mobile-nav').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  }
+  function closeMobileNav() {
+    document.getElementById('mobile-nav').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    const drawer = document.getElementById('mobile-nav');
+    const btn = document.getElementById('hamburger');
+    if (drawer.classList.contains('open') && !drawer.contains(e.target) && !btn.contains(e.target)) {
+      closeMobileNav();
+    }
+  });
 
   // SUMMARY
   function buildSummary() {
@@ -875,7 +931,7 @@
     if (!open) item.classList.add('open');
   }
 
-  // Clear individual field errors on change
+  // Clear field errors on input
   document.addEventListener('change', function(e) {
     const t = e.target;
     if (t.classList.contains('invalid')) {
