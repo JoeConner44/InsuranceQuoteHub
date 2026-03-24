@@ -245,7 +245,7 @@
         <div class="field">
           <label for="dob">Date of Birth <span class="req">*</span></label>
           <input type="date" id="dob" autocomplete="bday"/>
-          <div class="field-error" id="err-dob">Please enter your date of birth.</div>
+          <div class="field-error" id="err-dob">Please enter a valid date of birth. Must be between 16 and 100 years old.</div>
         </div>
         <div class="field">
           <label for="gender">Gender <span class="req">*</span></label>
@@ -615,8 +615,7 @@
 </footer>
 
 <script>
-  // ══ PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE ══
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycby1R-bz3Vb6BXNDQg2C8YXDrJGfxIr6KO2QsyZkennNDmh2Hps-BIlRv6heQGoOtE1w/exec';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwg0hOKP183ExUHlIerGMgI0_21XLr_kFcuT4cjXC9chyJKIJ91VvdkwDETWciAot-L/exec';
 
   // Populate year dropdown
   const yrSel = document.getElementById('vyear');
@@ -642,6 +641,15 @@
   function isValidPhone(v) {
     const digits = v.replace(/\D/g,'');
     return digits.length === 10 && digits[0] !== '0' && digits[0] !== '1';
+  }
+  function isValidDOB(v) {
+    if (!v) return false;
+    const dob = new Date(v + 'T00:00:00');
+    if (isNaN(dob.getTime())) return false;
+    const today = new Date();
+    if (dob >= today) return false;
+    const age = today.getFullYear() - dob.getFullYear() - (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate()) ? 1 : 0);
+    return age >= 16 && age <= 100;
   }
   function isValidZip(v) {
     return /^\d{5}$/.test(v.trim());
@@ -700,7 +708,7 @@
 
       if (!fname)                { setInvalid('fname','err-fname',true); valid=false; }
       if (!lname)                { setInvalid('lname','err-lname',true); valid=false; }
-      if (!dob)                  { setInvalid('dob','err-dob',true); valid=false; }
+      if (!isValidDOB(dob))      { setInvalid('dob','err-dob',true); valid=false; }
       if (!gender)               { setInvalid('gender','err-gender',true); valid=false; }
       if (!marital)              { setInvalid('marital','err-marital',true); valid=false; }
       if (!isValidZip(zip))      { setInvalid('zip','err-zip',true); valid=false; }
