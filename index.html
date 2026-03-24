@@ -10,7 +10,7 @@
     :root {
       --cream:#FDF6EC; --warm1:#F4A43A; --warm2:#E07B39; --amber:#F9C46B;
       --bark:#5C3317; --charcoal:#2B1F14; --muted:#8A6A50; --white:#FFFFFF;
-      --shadow:rgba(92,51,23,0.12);
+      --shadow:rgba(92,51,23,0.12); --error:#C0392B; --error-bg:#FDF0EE;
     }
     body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--charcoal); min-height:100vh; }
 
@@ -58,15 +58,69 @@
     .card-sub { color:var(--muted); font-size:0.9rem; margin-bottom:2rem; }
     .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem 1.4rem; }
     .span2 { grid-column:span 2; }
+
+    /* FIELD WRAPPER */
+    .field { display:flex; flex-direction:column; }
     label { display:block; font-size:0.82rem; font-weight:600; color:var(--bark); margin-bottom:0.38rem; }
-    input,select,textarea { width:100%; padding:0.68rem 0.9rem; border:1.5px solid #E0C9B4; border-radius:9px; font-family:'DM Sans',sans-serif; font-size:0.93rem; color:var(--charcoal); background:#FDFAF7; transition:border-color .2s,box-shadow .2s; appearance:none; outline:none; }
+    label .req { color:var(--error); margin-left:2px; }
+
+    input,select,textarea {
+      width:100%; padding:0.68rem 0.9rem; border:1.5px solid #E0C9B4; border-radius:9px;
+      font-family:'DM Sans',sans-serif; font-size:0.93rem; color:var(--charcoal);
+      background:#FDFAF7; transition:border-color .2s,box-shadow .2s; appearance:none; outline:none;
+    }
     select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%238A6A50' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 0.9rem center; padding-right:2.2rem; }
     input:focus,select:focus,textarea:focus { border-color:var(--warm1); box-shadow:0 0 0 3px rgba(244,164,58,0.18); }
+
+    /* VALIDATION STATES */
+    input.invalid, select.invalid, textarea.invalid {
+      border-color:var(--error) !important;
+      background:var(--error-bg);
+      box-shadow:0 0 0 3px rgba(192,57,43,0.12) !important;
+    }
+    .field-error {
+      font-size:0.75rem; color:var(--error); margin-top:0.3rem;
+      display:none; align-items:center; gap:0.3rem;
+    }
+    .field-error.show { display:flex; }
+
+    /* VALIDATION STATES FOR RADIO/CHECKBOX GROUPS */
+    .radio-group.invalid-group .radio-btn label {
+      border-color:var(--error);
+      background:var(--error-bg);
+    }
+
+    /* ERROR BANNER */
+    .error-banner {
+      background:var(--error-bg); border:1.5px solid var(--error); border-radius:10px;
+      padding:0.9rem 1.2rem; margin-bottom:1.4rem; font-size:0.88rem; color:var(--error);
+      font-weight:600; display:none; align-items:center; gap:0.6rem;
+    }
+    .error-banner.show { display:flex; }
+
+    /* RADIO / CHECKBOX */
     .radio-group { display:flex; gap:0.7rem; flex-wrap:wrap; }
     .radio-btn { flex:1; min-width:90px; }
     .radio-btn input[type="radio"],.radio-btn input[type="checkbox"] { display:none; }
     .radio-btn label { display:flex; align-items:center; justify-content:center; padding:0.6rem 0.8rem; border:1.5px solid #E0C9B4; border-radius:9px; cursor:pointer; font-size:0.85rem; font-weight:500; color:var(--muted); background:#FDFAF7; transition:all .2s; text-align:center; }
     .radio-btn input[type="radio"]:checked+label,.radio-btn input[type="checkbox"]:checked+label { border-color:var(--warm1); background:rgba(244,164,58,0.1); color:var(--warm2); font-weight:600; }
+
+    /* CONSENT */
+    .consent-block {
+      background:#FDF6EC; border:1.5px solid #E8D5C0; border-radius:12px;
+      padding:1.2rem 1.4rem; margin-top:1.6rem;
+    }
+    .consent-block.invalid-group { border-color:var(--error); background:var(--error-bg); }
+    .consent-row { display:flex; gap:0.8rem; align-items:flex-start; }
+    .consent-row input[type="checkbox"] {
+      width:18px; height:18px; min-width:18px; margin-top:2px; cursor:pointer;
+      accent-color:var(--warm2); border:2px solid #E0C9B4; border-radius:4px;
+      display:block; appearance:auto;
+    }
+    .consent-text { font-size:0.8rem; color:var(--muted); line-height:1.55; }
+    .consent-text strong { color:var(--bark); }
+
+    /* BUTTONS */
     .btn-row { display:flex; justify-content:space-between; align-items:center; margin-top:2rem; }
     .btn { padding:0.78rem 2rem; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; border:none; transition:all .2s; }
     .btn-primary { background:linear-gradient(135deg,var(--warm1),var(--warm2)); color:var(--white); box-shadow:0 4px 16px rgba(224,123,57,0.35); }
@@ -172,38 +226,80 @@
 
   <section class="form-section">
 
-    <!-- STEP 1 -->
+    <!-- ── STEP 1: Personal Info ── -->
     <div class="card" id="s1">
       <div class="card-title">Tell us about yourself</div>
-      <div class="card-sub">Your personal details help us find accurate rates in your area.</div>
+      <div class="card-sub">All fields are required to generate your quote.</div>
+      <div class="error-banner" id="err1">⚠ Please complete all required fields before continuing.</div>
       <div class="form-grid">
-        <div><label for="fname">First Name</label><input type="text" id="fname" placeholder="Jane"/></div>
-        <div><label for="lname">Last Name</label><input type="text" id="lname" placeholder="Smith"/></div>
-        <div><label for="dob">Date of Birth</label><input type="date" id="dob"/></div>
-        <div><label for="gender">Gender</label>
-          <select id="gender"><option value="">Select…</option><option>Male</option><option>Female</option><option>Non-binary</option><option>Prefer not to say</option></select>
+        <div class="field">
+          <label for="fname">First Name <span class="req">*</span></label>
+          <input type="text" id="fname" placeholder="Jane" autocomplete="given-name"/>
+          <div class="field-error" id="err-fname">Please enter your first name.</div>
         </div>
-        <div><label for="marital">Marital Status</label>
-          <select id="marital"><option value="">Select…</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
+        <div class="field">
+          <label for="lname">Last Name <span class="req">*</span></label>
+          <input type="text" id="lname" placeholder="Smith" autocomplete="family-name"/>
+          <div class="field-error" id="err-lname">Please enter your last name.</div>
         </div>
-        <div><label for="zip">ZIP Code</label><input type="text" id="zip" placeholder="30625" maxlength="5"/></div>
-        <div class="span2"><label for="email">Email Address</label><input type="email" id="email" placeholder="jane@example.com"/></div>
-        <div class="span2"><label for="phone">Phone Number</label><input type="tel" id="phone" placeholder="(555) 000-0000"/></div>
+        <div class="field">
+          <label for="dob">Date of Birth <span class="req">*</span></label>
+          <input type="date" id="dob" autocomplete="bday"/>
+          <div class="field-error" id="err-dob">Please enter your date of birth.</div>
+        </div>
+        <div class="field">
+          <label for="gender">Gender <span class="req">*</span></label>
+          <select id="gender">
+            <option value="">Select…</option>
+            <option>Male</option><option>Female</option><option>Non-binary</option><option>Prefer not to say</option>
+          </select>
+          <div class="field-error" id="err-gender">Please select a gender.</div>
+        </div>
+        <div class="field">
+          <label for="marital">Marital Status <span class="req">*</span></label>
+          <select id="marital">
+            <option value="">Select…</option>
+            <option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option>
+          </select>
+          <div class="field-error" id="err-marital">Please select your marital status.</div>
+        </div>
+        <div class="field">
+          <label for="zip">ZIP Code <span class="req">*</span></label>
+          <input type="text" id="zip" placeholder="30625" maxlength="5" autocomplete="postal-code"/>
+          <div class="field-error" id="err-zip">Please enter a valid 5-digit ZIP code.</div>
+        </div>
+        <div class="field span2">
+          <label for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="jane@example.com" autocomplete="email"/>
+          <div class="field-error" id="err-email">Please enter a valid email address.</div>
+        </div>
+        <div class="field span2">
+          <label for="phone">Phone Number <span class="req">*</span></label>
+          <input type="tel" id="phone" placeholder="(555) 000-0000" maxlength="14" autocomplete="tel"/>
+          <div class="field-error" id="err-phone">Please enter a valid 10-digit U.S. phone number.</div>
+        </div>
       </div>
       <div class="btn-row">
         <span style="font-size:0.8rem;color:var(--muted)">🔒 Your info is private &amp; secure</span>
-        <button class="btn btn-primary" onclick="goTo(2)">Next: Your Vehicle →</button>
+        <button class="btn btn-primary" onclick="validateAndGo(1,2)">Next: Your Vehicle →</button>
       </div>
     </div>
 
-    <!-- STEP 2 -->
+    <!-- ── STEP 2: Vehicle ── -->
     <div class="card" id="s2" style="display:none">
       <div class="card-title">About your vehicle</div>
-      <div class="card-sub">We'll need details about the car you want to insure.</div>
+      <div class="card-sub">All fields are required to generate your quote.</div>
+      <div class="error-banner" id="err2">⚠ Please complete all required fields before continuing.</div>
       <div class="form-grid">
-        <div><label for="vyear">Vehicle Year</label><select id="vyear"><option value="">Select year…</option></select></div>
-        <div><label for="vmake">Make</label>
-          <select id="vmake"><option value="">Select make…</option>
+        <div class="field">
+          <label for="vyear">Vehicle Year <span class="req">*</span></label>
+          <select id="vyear"><option value="">Select year…</option></select>
+          <div class="field-error" id="err-vyear">Please select a vehicle year.</div>
+        </div>
+        <div class="field">
+          <label for="vmake">Make <span class="req">*</span></label>
+          <select id="vmake">
+            <option value="">Select make…</option>
             <option>Acura</option><option>Audi</option><option>BMW</option><option>Buick</option><option>Cadillac</option>
             <option>Chevrolet</option><option>Chrysler</option><option>Dodge</option><option>Ford</option><option>GMC</option>
             <option>Honda</option><option>Hyundai</option><option>Infiniti</option><option>Jeep</option><option>Kia</option>
@@ -211,35 +307,71 @@
             <option>Ram</option><option>Subaru</option><option>Tesla</option><option>Toyota</option><option>Volkswagen</option>
             <option>Volvo</option><option>Other</option>
           </select>
+          <div class="field-error" id="err-vmake">Please select a vehicle make.</div>
         </div>
-        <div><label for="vmodel">Model</label><input type="text" id="vmodel" placeholder="e.g. Camry, F-150…"/></div>
-        <div><label for="vtrim">Trim / Style</label><input type="text" id="vtrim" placeholder="e.g. LE, XLT, Sport…"/></div>
-        <div><label for="vuse">Primary Use</label>
-          <select id="vuse"><option value="">Select…</option><option>Personal / Pleasure</option><option>Commute to Work</option><option>Business</option><option>Rideshare (Uber/Lyft)</option><option>Delivery</option></select>
+        <div class="field">
+          <label for="vmodel">Model <span class="req">*</span></label>
+          <input type="text" id="vmodel" placeholder="e.g. Camry, F-150…"/>
+          <div class="field-error" id="err-vmodel">Please enter the vehicle model.</div>
         </div>
-        <div><label for="vmiles">Annual Mileage</label>
-          <select id="vmiles"><option value="">Select…</option><option>Under 5,000 miles</option><option>5,000 – 10,000 miles</option><option>10,000 – 15,000 miles</option><option>15,000 – 20,000 miles</option><option>Over 20,000 miles</option></select>
+        <div class="field">
+          <label for="vtrim">Trim / Style <span class="req">*</span></label>
+          <input type="text" id="vtrim" placeholder="e.g. LE, XLT, Sport…"/>
+          <div class="field-error" id="err-vtrim">Please enter the vehicle trim.</div>
         </div>
-        <div><label for="vownership">Ownership</label>
-          <select id="vownership"><option value="">Select…</option><option>Owned outright</option><option>Financed / Loan</option><option>Leased</option></select>
+        <div class="field">
+          <label for="vuse">Primary Use <span class="req">*</span></label>
+          <select id="vuse">
+            <option value="">Select…</option>
+            <option>Personal / Pleasure</option><option>Commute to Work</option><option>Business</option>
+            <option>Rideshare (Uber/Lyft)</option><option>Delivery</option>
+          </select>
+          <div class="field-error" id="err-vuse">Please select how you primarily use this vehicle.</div>
         </div>
-        <div><label for="vgarage">Garaged overnight?</label>
-          <select id="vgarage"><option value="">Select…</option><option>Yes, in a garage</option><option>Yes, in a carport</option><option>No, on the street</option><option>No, in a driveway</option></select>
+        <div class="field">
+          <label for="vmiles">Annual Mileage <span class="req">*</span></label>
+          <select id="vmiles">
+            <option value="">Select…</option>
+            <option>Under 5,000 miles</option><option>5,000 – 10,000 miles</option>
+            <option>10,000 – 15,000 miles</option><option>15,000 – 20,000 miles</option>
+            <option>Over 20,000 miles</option>
+          </select>
+          <div class="field-error" id="err-vmiles">Please select your annual mileage.</div>
+        </div>
+        <div class="field">
+          <label for="vownership">Ownership <span class="req">*</span></label>
+          <select id="vownership">
+            <option value="">Select…</option>
+            <option>Owned outright</option><option>Financed / Loan</option><option>Leased</option>
+          </select>
+          <div class="field-error" id="err-vownership">Please select ownership status.</div>
+        </div>
+        <div class="field">
+          <label for="vgarage">Garaged overnight? <span class="req">*</span></label>
+          <select id="vgarage">
+            <option value="">Select…</option>
+            <option>Yes, in a garage</option><option>Yes, in a carport</option>
+            <option>No, on the street</option><option>No, in a driveway</option>
+          </select>
+          <div class="field-error" id="err-vgarage">Please select a garage option.</div>
         </div>
       </div>
       <div class="btn-row">
         <button class="btn btn-back" onclick="goTo(1)">← Back</button>
-        <button class="btn btn-primary" onclick="goTo(3)">Next: Drivers →</button>
+        <button class="btn btn-primary" onclick="validateAndGo(2,3)">Next: Drivers →</button>
       </div>
     </div>
 
-    <!-- STEP 3 -->
+    <!-- ── STEP 3: Drivers ── -->
     <div class="card" id="s3" style="display:none">
       <div class="card-title">Driver information</div>
-      <div class="card-sub">Tell us about everyone who will drive this vehicle.</div>
+      <div class="card-sub">All fields are required to generate your quote.</div>
+      <div class="error-banner" id="err3">⚠ Please complete all required fields before continuing.</div>
       <div class="form-grid">
-        <div><label for="dlicense">Driver's License State</label>
-          <select id="dlicense"><option value="">Select state…</option>
+        <div class="field">
+          <label for="dlicense">Driver's License State <span class="req">*</span></label>
+          <select id="dlicense">
+            <option value="">Select state…</option>
             <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option>
             <option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option>
             <option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option>
@@ -250,71 +382,123 @@
             <option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option>
             <option>WI</option><option>WY</option>
           </select>
+          <div class="field-error" id="err-dlicense">Please select your license state.</div>
         </div>
-        <div><label for="dlicenseyrs">Years Licensed</label>
-          <select id="dlicenseyrs"><option value="">Select…</option><option>Less than 1 year</option><option>1–2 years</option><option>3–5 years</option><option>6–10 years</option><option>11–20 years</option><option>Over 20 years</option></select>
+        <div class="field">
+          <label for="dlicenseyrs">Years Licensed <span class="req">*</span></label>
+          <select id="dlicenseyrs">
+            <option value="">Select…</option>
+            <option>Less than 1 year</option><option>1–2 years</option><option>3–5 years</option>
+            <option>6–10 years</option><option>11–20 years</option><option>Over 20 years</option>
+          </select>
+          <div class="field-error" id="err-dlicenseyrs">Please select years licensed.</div>
         </div>
-        <div class="span2">
-          <label>Good Driver Discount eligible?</label>
-          <div class="radio-group">
+        <div class="field span2">
+          <label>Good Driver Discount eligible? <span class="req">*</span></label>
+          <div class="radio-group" id="rg-gooddriver">
             <div class="radio-btn"><input type="radio" name="gooddriver" id="gd_yes" value="Yes – no violations"/><label for="gd_yes">Yes – no violations</label></div>
             <div class="radio-btn"><input type="radio" name="gooddriver" id="gd_no" value="No – I have violations"/><label for="gd_no">No – I have violations</label></div>
           </div>
+          <div class="field-error" id="err-gooddriver">Please select an option.</div>
         </div>
-        <div><label for="accidents">Accidents (past 3 yrs)</label>
-          <select id="accidents"><option value="">Select…</option><option>None</option><option>1 at-fault</option><option>2+ at-fault</option><option>1 not-at-fault</option></select>
+        <div class="field">
+          <label for="accidents">Accidents (past 3 yrs) <span class="req">*</span></label>
+          <select id="accidents">
+            <option value="">Select…</option>
+            <option>None</option><option>1 at-fault</option><option>2+ at-fault</option><option>1 not-at-fault</option>
+          </select>
+          <div class="field-error" id="err-accidents">Please select accident history.</div>
         </div>
-        <div><label for="violations">Violations (past 3 yrs)</label>
-          <select id="violations"><option value="">Select…</option><option>None</option><option>1 minor (speeding, etc.)</option><option>2+ minor</option><option>DUI/DWI</option><option>Major violation</option></select>
+        <div class="field">
+          <label for="violations">Violations (past 3 yrs) <span class="req">*</span></label>
+          <select id="violations">
+            <option value="">Select…</option>
+            <option>None</option><option>1 minor (speeding, etc.)</option><option>2+ minor</option>
+            <option>DUI/DWI</option><option>Major violation</option>
+          </select>
+          <div class="field-error" id="err-violations">Please select violation history.</div>
         </div>
-        <div class="span2">
-          <label>Additional drivers on the policy?</label>
-          <div class="radio-group">
+        <div class="field span2">
+          <label>Additional drivers on the policy? <span class="req">*</span></label>
+          <div class="radio-group" id="rg-addl">
             <div class="radio-btn"><input type="radio" name="addl" id="addl_no" value="Just me"/><label for="addl_no">Just me</label></div>
             <div class="radio-btn"><input type="radio" name="addl" id="addl_yes" value="Yes, add more drivers"/><label for="addl_yes">Yes, add more drivers</label></div>
           </div>
+          <div class="field-error" id="err-addl">Please select an option.</div>
         </div>
-        <div><label for="occupation">Occupation</label>
-          <select id="occupation"><option value="">Select…</option><option>Employed full-time</option><option>Employed part-time</option><option>Self-employed</option><option>Student</option><option>Retired</option><option>Homemaker</option><option>Military</option><option>Unemployed</option></select>
+        <div class="field">
+          <label for="occupation">Occupation <span class="req">*</span></label>
+          <select id="occupation">
+            <option value="">Select…</option>
+            <option>Employed full-time</option><option>Employed part-time</option><option>Self-employed</option>
+            <option>Student</option><option>Retired</option><option>Homemaker</option>
+            <option>Military</option><option>Unemployed</option>
+          </select>
+          <div class="field-error" id="err-occupation">Please select your occupation.</div>
         </div>
-        <div><label for="education">Highest Education</label>
-          <select id="education"><option value="">Select…</option><option>High school / GED</option><option>Some college</option><option>Associate's degree</option><option>Bachelor's degree</option><option>Graduate degree</option></select>
+        <div class="field">
+          <label for="education">Highest Education <span class="req">*</span></label>
+          <select id="education">
+            <option value="">Select…</option>
+            <option>High school / GED</option><option>Some college</option><option>Associate's degree</option>
+            <option>Bachelor's degree</option><option>Graduate degree</option>
+          </select>
+          <div class="field-error" id="err-education">Please select your education level.</div>
         </div>
       </div>
       <div class="btn-row">
         <button class="btn btn-back" onclick="goTo(2)">← Back</button>
-        <button class="btn btn-primary" onclick="goTo(4)">Next: Coverage →</button>
+        <button class="btn btn-primary" onclick="validateAndGo(3,4)">Next: Coverage →</button>
       </div>
     </div>
 
-    <!-- STEP 4 -->
+    <!-- ── STEP 4: Coverage ── -->
     <div class="card" id="s4" style="display:none">
       <div class="card-title">Choose your coverage</div>
-      <div class="card-sub">Select what's important to you — we'll find the best match.</div>
+      <div class="card-sub">All fields are required to generate your quote.</div>
+      <div class="error-banner" id="err4">⚠ Please complete all required fields and check the consent box before continuing.</div>
       <div class="form-grid">
-        <div class="span2">
-          <label>Current insurance status</label>
-          <div class="radio-group">
+        <div class="field span2">
+          <label>Current insurance status <span class="req">*</span></label>
+          <div class="radio-group" id="rg-insured">
             <div class="radio-btn"><input type="radio" name="insured" id="ins_yes" value="Currently insured"/><label for="ins_yes">Currently insured</label></div>
             <div class="radio-btn"><input type="radio" name="insured" id="ins_no" value="Not currently insured"/><label for="ins_no">Not currently insured</label></div>
             <div class="radio-btn"><input type="radio" name="insured" id="ins_lapse" value="Lapsed policy"/><label for="ins_lapse">Lapsed policy</label></div>
           </div>
+          <div class="field-error" id="err-insured">Please select your current insurance status.</div>
         </div>
-        <div><label for="current_carrier">Current Carrier (if any)</label><input type="text" id="current_carrier" placeholder="e.g. State Farm, Geico…"/></div>
-        <div><label for="current_exp">Policy Expiration</label><input type="date" id="current_exp"/></div>
-        <div class="span2">
-          <label>Coverage level desired</label>
-          <div class="radio-group">
+        <div class="field">
+          <label for="current_carrier">Current Carrier (if any)</label>
+          <input type="text" id="current_carrier" placeholder="e.g. State Farm, Geico…"/>
+        </div>
+        <div class="field">
+          <label for="current_exp">Policy Expiration</label>
+          <input type="date" id="current_exp"/>
+        </div>
+        <div class="field span2">
+          <label>Coverage level desired <span class="req">*</span></label>
+          <div class="radio-group" id="rg-covlevel">
             <div class="radio-btn"><input type="radio" name="covlevel" id="cov_min" value="State Minimum"/><label for="cov_min">State Minimum</label></div>
             <div class="radio-btn"><input type="radio" name="covlevel" id="cov_std" value="Standard"/><label for="cov_std">Standard</label></div>
             <div class="radio-btn"><input type="radio" name="covlevel" id="cov_full" value="Full Coverage"/><label for="cov_full">Full Coverage</label></div>
           </div>
+          <div class="field-error" id="err-covlevel">Please select a coverage level.</div>
         </div>
-        <div><label for="deductible">Preferred Deductible</label>
-          <select id="deductible"><option value="">Select…</option><option>$250</option><option>$500</option><option>$1,000</option><option>$1,500</option><option>$2,000</option><option>No preference</option></select>
+        <div class="field">
+          <label for="deductible">Preferred Deductible <span class="req">*</span></label>
+          <select id="deductible">
+            <option value="">Select…</option>
+            <option>$250</option><option>$500</option><option>$1,000</option>
+            <option>$1,500</option><option>$2,000</option><option>No preference</option>
+          </select>
+          <div class="field-error" id="err-deductible">Please select a deductible.</div>
         </div>
-        <div><label for="start_date">Desired Start Date</label><input type="date" id="start_date"/></div>
-        <div class="span2">
+        <div class="field">
+          <label for="start_date">Desired Start Date <span class="req">*</span></label>
+          <input type="date" id="start_date"/>
+          <div class="field-error" id="err-start_date">Please select a desired start date.</div>
+        </div>
+        <div class="field span2">
           <label>Optional add-ons (select all that apply)</label>
           <div class="radio-group" style="flex-wrap:wrap">
             <div class="radio-btn"><input type="checkbox" id="add_roadside"/><label for="add_roadside">Roadside Assistance</label></div>
@@ -323,15 +507,30 @@
             <div class="radio-btn"><input type="checkbox" id="add_umbrella"/><label for="add_umbrella">Umbrella Policy</label></div>
           </div>
         </div>
-        <div class="span2"><label for="notes">Anything else we should know?</label><textarea id="notes" rows="3" placeholder="Military service, good student discount, multi-policy discount, etc."></textarea></div>
+        <div class="field span2">
+          <label for="notes">Anything else we should know?</label>
+          <textarea id="notes" rows="3" placeholder="Military service, good student discount, multi-policy discount, etc."></textarea>
+        </div>
       </div>
+
+      <!-- TCPA CONSENT -->
+      <div class="consent-block" id="consent-block">
+        <div class="consent-row">
+          <input type="checkbox" id="tcpa_consent"/>
+          <div class="consent-text">
+            <strong>By checking this box and clicking "Get My Quotes!" I agree</strong> to be contacted by InsuranceQuoteHub.com and its network of licensed insurance agents and carriers by phone call, text message (SMS), and/or email regarding auto insurance quotes and products, even if my number is on a state or federal Do Not Call registry. I understand this consent is not required to purchase any goods or services. Message and data rates may apply. I have read and agree to the <a href="#" style="color:var(--warm2)">Privacy Policy</a> and <a href="#" style="color:var(--warm2)">Terms of Use</a>.
+          </div>
+        </div>
+        <div class="field-error" id="err-consent" style="margin-top:0.5rem">You must agree to the consent terms to continue.</div>
+      </div>
+
       <div class="btn-row">
         <button class="btn btn-back" onclick="goTo(3)">← Back</button>
-        <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">🎉 Get My Quotes!</button>
+        <button class="btn btn-primary" id="submit-btn" onclick="validateAndSubmit()">🎉 Get My Quotes!</button>
       </div>
     </div>
 
-    <!-- STEP 5 -->
+    <!-- ── STEP 5: Confirmation ── -->
     <div class="card confirm-card" id="s5" style="display:none">
       <div class="confirm-icon">🎉</div>
       <h2>You're all set!</h2>
@@ -416,7 +615,7 @@
 </footer>
 
 <script>
-  // ══ STEP 1: Paste your Google Apps Script Web App URL below ══
+  // ══ PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE ══
   const SHEET_URL = 'https://script.google.com/macros/s/AKfycby1R-bz3Vb6BXNDQg2C8YXDrJGfxIr6KO2QsyZkennNDmh2Hps-BIlRv6heQGoOtE1w/exec';
 
   // Populate year dropdown
@@ -426,17 +625,150 @@
     o.value = y; o.textContent = y; yrSel.appendChild(o);
   }
 
-  // PAGE NAV
-  function showPage(name) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + name).classList.add('active');
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-nav'));
-    const nav = document.getElementById('nav-' + name);
-    if (nav) nav.classList.add('active-nav');
-    document.documentElement.scrollTop = 0;
+  // Auto-format phone number as (555) 000-0000
+  document.getElementById('phone').addEventListener('input', function(e) {
+    let val = e.target.value.replace(/\D/g,'');
+    if (val.length > 10) val = val.slice(0,10);
+    if (val.length >= 7) val = '(' + val.slice(0,3) + ') ' + val.slice(3,6) + '-' + val.slice(6);
+    else if (val.length >= 4) val = '(' + val.slice(0,3) + ') ' + val.slice(3);
+    else if (val.length > 0) val = '(' + val;
+    e.target.value = val;
+  });
+
+  // ── VALIDATORS ──
+  function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+  }
+  function isValidPhone(v) {
+    const digits = v.replace(/\D/g,'');
+    return digits.length === 10 && digits[0] !== '0' && digits[0] !== '1';
+  }
+  function isValidZip(v) {
+    return /^\d{5}$/.test(v.trim());
   }
 
-  // FORM STEP NAV — no scroll
+  // Mark a field invalid or clear it
+  function setInvalid(id, errId, invalid) {
+    const el = document.getElementById(id);
+    const err = document.getElementById(errId);
+    if (!el || !err) return;
+    if (invalid) {
+      el.classList.add('invalid');
+      err.classList.add('show');
+    } else {
+      el.classList.remove('invalid');
+      err.classList.remove('show');
+    }
+  }
+
+  function setGroupInvalid(groupId, errId, invalid) {
+    const el = document.getElementById(groupId);
+    const err = document.getElementById(errId);
+    if (!el || !err) return;
+    if (invalid) {
+      el.classList.add('invalid-group');
+      err.classList.add('show');
+    } else {
+      el.classList.remove('invalid-group');
+      err.classList.remove('show');
+    }
+  }
+
+  // Clear all validation on a step
+  function clearValidation(step) {
+    document.querySelectorAll('#s' + step + ' .invalid').forEach(el => el.classList.remove('invalid'));
+    document.querySelectorAll('#s' + step + ' .invalid-group').forEach(el => el.classList.remove('invalid-group'));
+    document.querySelectorAll('#s' + step + ' .field-error.show').forEach(el => el.classList.remove('show'));
+    document.getElementById('err' + step).classList.remove('show');
+    if (step === 4) document.getElementById('consent-block').classList.remove('invalid-group');
+  }
+
+  // ── STEP VALIDATION ──
+  function validateStep(step) {
+    let valid = true;
+    clearValidation(step);
+
+    if (step === 1) {
+      const fname = document.getElementById('fname').value.trim();
+      const lname = document.getElementById('lname').value.trim();
+      const dob   = document.getElementById('dob').value;
+      const gender = document.getElementById('gender').value;
+      const marital = document.getElementById('marital').value;
+      const zip   = document.getElementById('zip').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value;
+
+      if (!fname)                { setInvalid('fname','err-fname',true); valid=false; }
+      if (!lname)                { setInvalid('lname','err-lname',true); valid=false; }
+      if (!dob)                  { setInvalid('dob','err-dob',true); valid=false; }
+      if (!gender)               { setInvalid('gender','err-gender',true); valid=false; }
+      if (!marital)              { setInvalid('marital','err-marital',true); valid=false; }
+      if (!isValidZip(zip))      { setInvalid('zip','err-zip',true); valid=false; }
+      if (!isValidEmail(email))  { setInvalid('email','err-email',true); valid=false; }
+      if (!isValidPhone(phone))  { setInvalid('phone','err-phone',true); valid=false; }
+    }
+
+    if (step === 2) {
+      const fields = ['vyear','vmake','vmodel','vtrim','vuse','vmiles','vownership','vgarage'];
+      fields.forEach(id => {
+        if (!document.getElementById(id).value.trim()) {
+          setInvalid(id, 'err-'+id, true); valid=false;
+        }
+      });
+    }
+
+    if (step === 3) {
+      const selects = ['dlicense','dlicenseyrs','accidents','violations','occupation','education'];
+      selects.forEach(id => {
+        if (!document.getElementById(id).value) {
+          setInvalid(id, 'err-'+id, true); valid=false;
+        }
+      });
+      if (!document.querySelector('input[name="gooddriver"]:checked')) {
+        setGroupInvalid('rg-gooddriver','err-gooddriver',true); valid=false;
+      }
+      if (!document.querySelector('input[name="addl"]:checked')) {
+        setGroupInvalid('rg-addl','err-addl',true); valid=false;
+      }
+    }
+
+    if (step === 4) {
+      if (!document.querySelector('input[name="insured"]:checked')) {
+        setGroupInvalid('rg-insured','err-insured',true); valid=false;
+      }
+      if (!document.querySelector('input[name="covlevel"]:checked')) {
+        setGroupInvalid('rg-covlevel','err-covlevel',true); valid=false;
+      }
+      if (!document.getElementById('deductible').value) {
+        setInvalid('deductible','err-deductible',true); valid=false;
+      }
+      if (!document.getElementById('start_date').value) {
+        setInvalid('start_date','err-start_date',true); valid=false;
+      }
+      if (!document.getElementById('tcpa_consent').checked) {
+        document.getElementById('consent-block').classList.add('invalid-group');
+        document.getElementById('err-consent').classList.add('show');
+        valid=false;
+      }
+    }
+
+    if (!valid) {
+      document.getElementById('err' + step).classList.add('show');
+    }
+    return valid;
+  }
+
+  // ── NAVIGATION ──
+  function validateAndGo(fromStep, toStep) {
+    if (!validateStep(fromStep)) return;
+    goTo(toStep);
+  }
+
+  function validateAndSubmit() {
+    if (!validateStep(4)) return;
+    submitForm();
+  }
+
   let currentStep = 1;
   function goTo(step) {
     if (step === 5) buildSummary();
@@ -452,6 +784,17 @@
       else if (i === step) dot.classList.add('active');
     }
     currentStep = step;
+    // no scroll
+  }
+
+  // PAGE NAV
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-nav'));
+    const nav = document.getElementById('nav-' + name);
+    if (nav) nav.classList.add('active-nav');
+    document.documentElement.scrollTop = 0;
   }
 
   // SUMMARY
@@ -460,12 +803,12 @@
     const r = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : '—'; };
     document.getElementById('sum-name').textContent     = (v('fname') + ' ' + v('lname')).trim();
     document.getElementById('sum-zip').textContent      = v('zip');
-    document.getElementById('sum-vehicle').textContent  = [v('vyear'), v('vmake'), v('vmodel')].filter(x => x !== '—').join(' ') || '—';
+    document.getElementById('sum-vehicle').textContent  = [v('vyear'),v('vmake'),v('vmodel')].filter(x=>x!=='—').join(' ') || '—';
     document.getElementById('sum-coverage').textContent = r('covlevel');
     document.getElementById('sum-email').textContent    = v('email');
   }
 
-  // COLLECT ALL DATA
+  // COLLECT DATA
   function collectData() {
     const v = id => document.getElementById(id).value || '';
     const r = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; };
@@ -474,6 +817,8 @@
       .map(id => document.getElementById(id).nextElementSibling.textContent);
     return {
       submittedAt: new Date().toLocaleString(),
+      consentGiven: 'Yes',
+      consentTimestamp: new Date().toISOString(),
       firstName: v('fname'), lastName: v('lname'), dateOfBirth: v('dob'),
       gender: v('gender'), maritalStatus: v('marital'), zipCode: v('zip'),
       email: v('email'), phone: v('phone'),
@@ -490,17 +835,17 @@
     };
   }
 
-  // SUBMIT TO GOOGLE SHEETS
+  // SUBMIT
   async function submitForm() {
     const btn = document.getElementById('submit-btn');
     btn.disabled = true; btn.textContent = 'Submitting…';
     try {
       await fetch(SHEET_URL, {
-        method: 'POST', mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
+        method:'POST', mode:'no-cors',
+        headers:{'Content-Type':'application/json'},
         body: JSON.stringify(collectData())
       });
-    } catch(e) { /* no-cors — still sends */ }
+    } catch(e) {}
     goTo(5);
     btn.disabled = false; btn.textContent = '🎉 Get My Quotes!';
   }
@@ -508,9 +853,10 @@
   // RESET
   function startOver() {
     document.querySelectorAll('input,select,textarea').forEach(el => {
-      if (el.type === 'radio' || el.type === 'checkbox') el.checked = false;
-      else el.value = '';
+      if (el.type==='radio'||el.type==='checkbox') el.checked=false;
+      else el.value='';
     });
+    clearValidation(1); clearValidation(2); clearValidation(3); clearValidation(4);
     goTo(1);
   }
 
@@ -521,6 +867,24 @@
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
     if (!open) item.classList.add('open');
   }
+
+  // Clear individual field errors on change
+  document.addEventListener('change', function(e) {
+    const t = e.target;
+    if (t.classList.contains('invalid')) {
+      t.classList.remove('invalid');
+      const err = document.getElementById('err-' + t.id);
+      if (err) err.classList.remove('show');
+    }
+  });
+  document.addEventListener('input', function(e) {
+    const t = e.target;
+    if (t.classList.contains('invalid')) {
+      t.classList.remove('invalid');
+      const err = document.getElementById('err-' + t.id);
+      if (err) err.classList.remove('show');
+    }
+  });
 </script>
 </body>
 </html>
